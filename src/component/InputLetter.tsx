@@ -52,7 +52,7 @@ const CharacterInput: React.FC<CharacterInputProps> = ({
   }, [error]);
   useEffect(() => {
     setChars(Array(nums).fill(""));
-  }, [nums]);
+  }, [nums, answer]);
   useEffect(() => {
     changeinputanswer(chars.join(""));
   }, [chars]);

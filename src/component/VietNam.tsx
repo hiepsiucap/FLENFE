@@ -58,8 +58,8 @@ export default function VietNam({
       setTimeout(() => {
         changeinputanswer("");
         changeerror("none");
+        setLoading(false);
       }, 400);
-      setLoading(false);
     } else {
       changeerror("success");
       playSuccessSound();

@@ -15,7 +15,7 @@ const customStyles = {
     backgroundColor: "rgba(0, 0, 0, 0.5)", // màu đen nhạt cho background ngoài modal
   },
   content: {
-    top: "40%",
+    top: "50%",
     left: "50%",
     right: "auto",
     bottom: "auto",
@@ -57,7 +57,7 @@ const FinishDay = ({ totalScore }: { totalScore: number }) => {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <div className=" flex flex-col items-center font-opensans justify-between space-y-12">
+        <div className=" flex flex-col items-center font-opensans pt-6 pb-12 justify-between space-y-12">
           <div className=" flex items-center font-semibold text-2xl font-opensans text-primary  flex-col space-y-12">
             <p> Chúc mừng bạn Hoàn thành thử thách ngày</p>
             <div className=" w-40 h-40">
@@ -75,11 +75,14 @@ const FinishDay = ({ totalScore }: { totalScore: number }) => {
                 />
               </CircularProgressbarWithChildren>
             </div>
-            <div className=" text-center  font-semibold text-xl">
+            <div className=" text-center  font-semibold text-3xl">
               {totalScore}/{user?.scoreADay}
             </div>
           </div>
-          <button className=" py-2 px-6 bg-primary  text-white rounded-lg">
+          <button
+            onClick={closeModal}
+            className=" py-2 px-6 bg-primary  text-white rounded-lg"
+          >
             Kết thúc
           </button>
         </div>

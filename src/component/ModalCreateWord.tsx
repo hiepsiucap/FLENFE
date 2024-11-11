@@ -213,7 +213,7 @@ const CreateWord: React.FC = () => {
               />
             </div>
             <div className=" flex w-full flex-col space-x-1">
-              <p className=" text-sm">ví dụ:</p>
+              <p className=" text-sm">Định nghĩa:</p>
               <input
                 className="border border-gray-400 rounded-md py-2 px-4"
                 type="text"

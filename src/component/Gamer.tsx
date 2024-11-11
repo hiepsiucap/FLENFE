@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import VietNam from "./VietNam";
 import Meaning from "./MeaningGame";
 import SoundGame from "./SoundGame";
+import ExampleGamer from "./ExampleGamer";
 import { Review } from "../component";
 import { useStateUserContext } from "../contexts/UserContextProvider";
 import { PatchRequestWithCre } from "../utilz/Request/PatchRequest";
@@ -50,41 +51,92 @@ export default function Gamer({
   const { accesstoken, refreshtoken, user } = useStateUserContext();
   const [round, changeRound] = useState<round[]>(
     shuffleArray(
-      flashCard.flatMap((card: FlashCardType) => [
-        {
-          _id: card._id,
-          book: card.book,
-          questionType: "meaning",
-          answer: card.text,
-          meaning: card.meaning,
-          score: 0,
-          phonetic: card.phonetic,
-          example: card.example,
-          image: card.image,
-        },
-        {
-          _id: card._id,
-          book: card.book,
-          questionType: "vietnam",
-          answer: card.text,
-          meaning: card.meaning,
-          score: 0,
-          phonetic: card.phonetic,
-          example: card.example,
-          image: card.image,
-        },
-        {
-          _id: card._id,
-          book: card.book,
-          questionType: "sound",
-          answer: card.text,
-          meaning: card.meaning,
-          score: 0,
-          phonetic: card.phonetic,
-          example: card.example,
-          image: card.image,
-        },
-      ])
+      flashCard.flatMap((card: FlashCardType): round[] => {
+        if (card.example.toLowerCase().includes(card.text.toLowerCase())) {
+          return [
+            {
+              _id: card._id,
+              book: card.book,
+              questionType: "meaning",
+              answer: card.text,
+              meaning: card.meaning,
+              score: 0,
+              phonetic: card.phonetic,
+              example: card.example,
+              image: card.image,
+            },
+            {
+              _id: card._id,
+              book: card.book,
+              questionType: "vietnam",
+              answer: card.text,
+              meaning: card.meaning,
+              score: 0,
+              phonetic: card.phonetic,
+              example: card.example,
+              image: card.image,
+            },
+            {
+              _id: card._id,
+              book: card.book,
+              questionType: "sound",
+              answer: card.text,
+              meaning: card.meaning,
+              score: 0,
+              phonetic: card.phonetic,
+              example: card.example,
+              image: card.image,
+            },
+            {
+              _id: card._id,
+              book: card.book,
+              questionType: "examplegame",
+              answer: card.text,
+              meaning: card.meaning,
+              score: 0,
+              phonetic: card.phonetic,
+              example: card.example,
+              image: card.image,
+            },
+          ];
+        } else {
+          return [
+            {
+              _id: card._id,
+              book: card.book,
+              questionType: "meaning",
+              answer: card.text,
+              meaning: card.meaning,
+              score: 0,
+              phonetic: card.phonetic,
+              example: card.example,
+              image: card.image,
+            },
+            {
+              _id: card._id,
+              book: card.book,
+              questionType: "vietnam",
+              answer: card.text,
+              meaning: card.meaning,
+              score: 0,
+              phonetic: card.phonetic,
+              example: card.example,
+              image: card.image,
+            },
+            {
+              _id: card._id,
+              book: card.book,
+              questionType: "sound",
+              answer: card.text,
+              meaning: card.meaning,
+              score: 0,
+              phonetic: card.phonetic,
+              example: card.example,
+              image: card.image,
+            },
+          ];
+        }
+      })
     )
   );
   const playFinishSound = () => {
@@ -125,7 +177,10 @@ export default function Gamer({
   };
   useEffect(() => {
     if (round) {
-      const temptt = round.reduce((total, each) => total + each.score, 0);
+      const temptt = round.reduce(
+        (total: number, each: { score: number }) => total + each.score,
+        0
+      );
       changetotalscore(temptt);
     }
   }, [round]);
@@ -218,7 +273,7 @@ export default function Gamer({
               changeCurrent={UpdateCurrent}
               UpdateScore={UpdateScore}
             ></VietNam>
-          ) : (
+          ) : round[currentvalue].questionType == "sound " ? (
             <SoundGame
               data={round[currentvalue]}
               total={round.length}
@@ -228,13 +283,24 @@ export default function Gamer({
               changeCurrent={UpdateCurrent}
               UpdateScore={UpdateScore}
             ></SoundGame>
+          ) : (
+            <ExampleGamer
+              data={round[currentvalue]}
+              total={round.length}
+              key={round[currentvalue]._id}
+              round={round}
+              currentvalue={currentvalue}
+              onFinish={onFinish}
+              changeCurrent={UpdateCurrent}
+              UpdateScore={UpdateScore}
+            ></ExampleGamer>
           )}
         </div>
       ) : (
         <>
           <div className=" w-4/5  font-opensans mt-6 flex flex-col justify-center items-center py-12   text-black">
-            <div className=" bg-white rounded-lg shadow-lg w-4/5 flex flex-col items-center space-y-12  h-custom2 py-12 pb-24 px-12">
-              <p className=" text-3xl font-semibold text-primary">
+            <div className=" bg-white rounded-lg shadow-lg w-4/5 flex flex-col items-center space-y-12  h-custom2 py-12 pb-12 px-12">
+              <p className=" text-3xl font-semibold pt-6 text-primary">
                 Chúc mừng bạn đã hoàn thành bài thi
               </p>
               <img

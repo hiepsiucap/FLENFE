@@ -58,8 +58,8 @@ export default function Meaning({
       setTimeout(() => {
         changeinputanswer("");
         changeerror("none");
+        setLoading(false);
       }, 400);
-      setLoading(false);
     } else {
       changeerror("success");
       playSuccessSound();
@@ -73,6 +73,7 @@ export default function Meaning({
       setTimeout(() => {
         if (currentvalue == total - 1) {
           onFinish({ total: tempscore, roundid: data._id });
+          changetempscore(100);
         } else {
           changeCurrent();
           changeerror("none");
