@@ -65,8 +65,11 @@ const Flashcard = ({
     [accesstoken, refreshtoken, setLoading]
   );
   useEffect(() => {
-    fetchAudio(info._id);
-    setIsFlipped(false);
+    const FetchAu = async () => {
+      fetchAudio(info._id);
+      setIsFlipped(false);
+    };
+    FetchAu();
   }, [fetchAudio, info, setIsFlipped]);
   return (
     <div className="group h-custom w-custom [perspective:1000px]">
