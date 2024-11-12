@@ -67,10 +67,6 @@ export default function DetailBook() {
           const url = URL.createObjectURL(blob);
           setAudioUrl(url);
           console.log(url);
-          if (audioRef.current) {
-            audioRef.current.load();
-            audioRef.current.play();
-          }
         }
         setLoading(false);
       }
@@ -79,6 +75,12 @@ export default function DetailBook() {
       console.log(e);
     }
   };
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.load();
+      audioRef.current.play();
+    }
+  }, [audioUrl]);
   const DeleteHandler = async (id: string) => {
     if (id) {
       const response = await DeleteRequestWithCre({
