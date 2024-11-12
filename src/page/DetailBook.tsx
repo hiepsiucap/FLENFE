@@ -26,6 +26,7 @@ export default function DetailBook() {
   const { accesstoken, refreshtoken } = useStateUserContext();
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const { isLoading, setLoading } = useFetch();
+  const [idaudio, setidaudio] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const navigate = useNavigate();
   const [listword, changelistword] = useState<Word[]>();
@@ -135,9 +136,10 @@ export default function DetailBook() {
                   </div>
                   <div className=" flex w-full flex-col">
                     <div className=" w-full flex items-center justify-between">
-                      {!isLoading ? (
+                      {!isLoading || idaudio !== word._id ? (
                         <button
                           onClick={() => {
+                            setidaudio(word._id);
                             fetchAudio(word._id);
                           }}
                         >
