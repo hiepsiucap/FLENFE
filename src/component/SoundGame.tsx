@@ -124,11 +124,13 @@ export default function SoundGame({
       setLoading(false);
       console.log(e);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     setTimeout(() => {
       fetchAudio(data._id);
     }, 400);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
   const playErrorSound = () => {
     new Audio(errorSound).play();

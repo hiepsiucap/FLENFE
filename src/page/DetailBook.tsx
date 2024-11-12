@@ -43,6 +43,7 @@ export default function DetailBook() {
       }
     };
     fetchListWord();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookId]);
   const fetchAudio = async (id: string) => {
     setLoading(true);

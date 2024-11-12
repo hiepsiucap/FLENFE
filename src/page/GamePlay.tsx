@@ -153,7 +153,7 @@ export default function GamePlay() {
       }
     };
     GetRequest();
-  }, []);
+  }, [accesstoken, refreshtoken]);
   return (
     <>
       {flashcard?.length > 0 && !isplay ? (
@@ -296,7 +296,7 @@ export default function GamePlay() {
                 {createArrayFrom(
                   data.find((book) => book._id == submitdata.id)
                     ?.dueCardsCount || 0
-                ).map((book, index) => {
+                ).map((_book, index) => {
                   return (
                     <option value={(index + 1).toString()}>{index + 1}</option>
                   );

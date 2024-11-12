@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import Modal from "react-modal";
 import Champion from "../assets/image/champion.png";
 import {
@@ -34,9 +34,6 @@ const FinishDay = ({ totalScore }: { totalScore: number }) => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(true);
   const subtitle = useRef<HTMLHeadingElement | null>(null);
   const { user } = useStateUserContext();
-  function openModal() {
-    setIsOpen(true);
-  }
 
   function afterOpenModal() {
     if (subtitle.current) {

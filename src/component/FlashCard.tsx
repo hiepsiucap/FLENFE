@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useFetch } from "../customhook";
 import Sound from "../assets/icon/sound";
 import SoundSuccess from "../assets/icon/soundSuccess";
@@ -28,43 +28,46 @@ const Flashcard = ({
   const audioRef = useRef<HTMLAudioElement>(null);
   const { accesstoken, refreshtoken } = useStateUserContext();
   const { isLoading, setLoading } = useFetch();
-  const fetchAudio = async (id: string) => {
-    setLoading(true);
-    try {
-      if (accesstoken && refreshtoken) {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL_SERVER}/api/flashcard/read/${id}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${accesstoken}`,
-              "X-refresh-token": refreshtoken,
-            },
-            credentials: "include",
+  const fetchAudio = useCallback(
+    async (id: string) => {
+      setLoading(true);
+      try {
+        if (accesstoken && refreshtoken) {
+          const response = await fetch(
+            `${import.meta.env.VITE_API_URL_SERVER}/api/flashcard/read/${id}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${accesstoken}`,
+                "X-refresh-token": refreshtoken,
+              },
+              credentials: "include",
+            }
+          );
+          const blob = await response.blob();
+          console.log(blob);
+          if (blob) {
+            const url = URL.createObjectURL(blob);
+            setAudioUrl(url);
+            console.log(url);
+            if (audioRef.current) {
+              audioRef.current.load();
+              audioRef.current.play();
+            }
           }
-        );
-        const blob = await response.blob();
-        console.log(blob);
-        if (blob) {
-          const url = URL.createObjectURL(blob);
-          setAudioUrl(url);
-          console.log(url);
-          if (audioRef.current) {
-            audioRef.current.load();
-            audioRef.current.play();
-          }
+          setLoading(false);
         }
+      } catch (e) {
         setLoading(false);
+        console.log(e);
       }
-    } catch (e) {
-      setLoading(false);
-      console.log(e);
-    }
-  };
+    },
+    [accesstoken, refreshtoken, setLoading]
+  );
   useEffect(() => {
     fetchAudio(info._id);
     setIsFlipped(false);
-  }, [info]);
+  }, [fetchAudio, info, setIsFlipped]);
   return (
     <div className="group h-custom w-custom [perspective:1000px]">
       <div

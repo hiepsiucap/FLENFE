@@ -3,7 +3,6 @@
 import React, { useState, useRef, useCallback } from "react";
 import debounce from "lodash/debounce";
 import Modal from "react-modal";
-import { Link } from "react-router-dom";
 import { ColorRing } from "react-loader-spinner";
 import { useFetch } from "../customhook";
 import { useNavigate } from "react-router-dom";
@@ -44,7 +43,6 @@ const CreateWord: React.FC = () => {
   const { isLoading, setLoading, error, setError } = useFetch();
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const subtitle = useRef<HTMLHeadingElement | null>(null);
-  const [name, changename] = useState<string>("");
   function openModal() {
     setIsOpen(true);
   }
@@ -86,6 +84,7 @@ const CreateWord: React.FC = () => {
       phonetic: data[0]?.phonetic || "",
     };
   }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedFetch = useCallback(
     debounce(async (searchTerm: string) => {
       console.log(searchTerm);
@@ -236,7 +235,13 @@ const CreateWord: React.FC = () => {
                   ariaLabel="color-ring-loading"
                   wrapperStyle={{}}
                   wrapperClass="color-ring-wrapper"
-                  colors={["#e15b64"]}
+                  colors={[
+                    "#e15b64",
+                    "#e15b64",
+                    "#e15b64",
+                    "#e15b64",
+                    "#e15b64",
+                  ]}
                 />
               </button>
             ) : (

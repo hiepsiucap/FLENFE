@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import VietNam from "./VietNam";
 import Meaning from "./MeaningGame";
 import SoundGame from "./SoundGame";

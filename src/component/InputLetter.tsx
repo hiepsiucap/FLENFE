@@ -49,12 +49,14 @@ const CharacterInput: React.FC<CharacterInputProps> = ({
         inputRefs.current[0]?.focus();
       }, 500);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
   useEffect(() => {
     setChars(Array(nums).fill(""));
-  }, [nums, answer]);
+  }, [nums]);
   useEffect(() => {
     changeinputanswer(chars.join(""));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chars]);
   const handleKeyDown = (
     index: number,

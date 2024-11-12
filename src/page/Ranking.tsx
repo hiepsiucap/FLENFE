@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GetRequestWithCre } from "../utilz/Request/getRequest";
 import { useStateUserContext } from "../contexts/UserContextProvider";
 import { useNavigate } from "react-router-dom";
@@ -39,6 +39,7 @@ export default function Ranking() {
       }
     };
     getTopUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className=" flex w-full">

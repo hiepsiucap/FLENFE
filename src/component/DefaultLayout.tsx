@@ -2,7 +2,6 @@
 import { Link, Outlet } from "react-router-dom";
 import { useStateUserContext } from "../contexts/UserContextProvider";
 import { Navigate } from "react-router-dom";
-import ReturnMedal from "../utilz/ReturnMedal";
 import Podium from "../assets/image/podium.png";
 import Logo from "../assets/icon/logo";
 import fire from "../assets/image/fire.png";
@@ -45,7 +44,7 @@ export default function DefaultLayout() {
       }
     };
     GetTotal();
-  }, []);
+  }, [accesstoken, refreshtoken]);
   if (!user) {
     return <Navigate to="/login"></Navigate>;
   }
