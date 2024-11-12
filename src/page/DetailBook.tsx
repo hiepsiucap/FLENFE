@@ -122,7 +122,10 @@ export default function DetailBook() {
           {listword ? (
             listword.map((word) => {
               return (
-                <div className=" shadow-lg bg-white py-10 rounded-lg px-10 flex justify-start space-x-5">
+                <div
+                  key={word._id}
+                  className=" shadow-lg bg-white py-10 rounded-lg px-10 flex justify-start space-x-5"
+                >
                   <div className=" flex w-fit min-w-40 flex-col">
                     <img
                       src={word.image}
