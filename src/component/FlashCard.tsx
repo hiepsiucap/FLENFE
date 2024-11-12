@@ -50,10 +50,6 @@ const Flashcard = ({
             const url = URL.createObjectURL(blob);
             setAudioUrl(url);
             console.log(url);
-            if (audioRef.current) {
-              audioRef.current.load();
-              audioRef.current.play();
-            }
           }
           setLoading(false);
         }
@@ -64,6 +60,13 @@ const Flashcard = ({
     },
     [accesstoken, refreshtoken, setLoading]
   );
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.load();
+      audioRef.current.play();
+    }
+  }, [audioUrl]);
+
   useEffect(() => {
     const FetchAu = async () => {
       fetchAudio(info._id);
