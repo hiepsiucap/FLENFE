@@ -161,6 +161,7 @@ const Flashcard = ({
           <h5 className=" font-semibold py-2 text-lg text-start">
             {info.meaning}
           </h5>
+
           <h5 className=" font-light tex text-start">Example:{info.example}</h5>
           <div className=" h-full w-full  flex items-center justify-center">
             <img
