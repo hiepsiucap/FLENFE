@@ -165,7 +165,13 @@ const CreateBook: React.FC = () => {
                   ariaLabel="color-ring-loading"
                   wrapperStyle={{}}
                   wrapperClass="color-ring-wrapper"
-                  colors={["#e15b64"]}
+                  colors={[
+                    "#e15b64",
+                    "#e15b64",
+                    "#e15b64",
+                    "#e15b64",
+                    "#e15b64",
+                  ]}
                 />
               </button>
             ) : (

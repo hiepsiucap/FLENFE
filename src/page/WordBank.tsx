@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useStateUserContext } from "../contexts/UserContextProvider";
 import { GetRequestWithCre } from "../utilz/Request/getRequest";
 import { formatDate } from "../utilz/Format";
@@ -44,6 +44,7 @@ export default function WordBank() {
     };
 
     GetRequest();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   console.log(data);
   return (

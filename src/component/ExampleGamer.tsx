@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import { useState } from "react";
 import successSound from "../assets/audio/success.mp3";
 import errorSound from "../assets/audio/error.mp3";
 import ButtonExampleGame from "./ButtonExampleGame";
@@ -24,7 +24,7 @@ interface Round {
   phonetic: string;
   example: string;
   score: number;
-  round: Roundinf[];
+  round?: Roundinf[];
   questionType: string;
   image: string;
 }
@@ -103,16 +103,7 @@ export default function ExampleGamer({
   const { isLoading, setLoading } = useFetch();
   const [error, changeerror] = useState("none");
   const [tempscore, changetempscore] = useState<number>(100);
-  const [listanswer, changelistanswer] = useState(
-    shuffleArray([
-      ...getRandomElements({
-        arr: round,
-        count: 3,
-        answer: data.answer,
-      }),
-      { correct: true, text: data.answer },
-    ])
-  );
+
   const onSubmitHandler = (inputanswer: string) => {
     setLoading(true);
     if (inputanswer !== data.answer) {
@@ -181,7 +172,14 @@ export default function ExampleGamer({
         {isLoading ? (
           <>
             <div className=" grid grid-cols-2 grid-rows-2 w-full h-full gap-6 pt-16">
-              {listanswer.map((btn) => {
+              {shuffleArray([
+                ...getRandomElements({
+                  arr: round,
+                  count: 3,
+                  answer: data.answer,
+                }),
+                { correct: true, text: data.answer },
+              ]).map((btn) => {
                 return (
                   <ButtonExampleGame
                     correct={btn.correct}
@@ -196,7 +194,14 @@ export default function ExampleGamer({
           </>
         ) : (
           <div className=" grid grid-cols-2 grid-rows-2 w-full h-full gap-6 pt-16">
-            {listanswer.map((btn) => {
+            {shuffleArray([
+              ...getRandomElements({
+                arr: round,
+                count: 3,
+                answer: data.answer,
+              }),
+              { correct: true, text: data.answer },
+            ]).map((btn) => {
               return (
                 <ButtonExampleGame
                   correct={btn.correct}
