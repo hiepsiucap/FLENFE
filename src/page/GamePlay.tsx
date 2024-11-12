@@ -202,6 +202,7 @@ export default function GamePlay() {
                 </svg>
               </button>
               <Flashcard
+                key={flashcard[now]._id}
                 info={flashcard[now]}
                 setIsFlipped={setIsFlipped}
                 isFlipped={isFlipped}
