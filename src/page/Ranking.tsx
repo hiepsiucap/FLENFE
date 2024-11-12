@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { GetRequestWithCre } from "../utilz/Request/getRequest";
 import { useStateUserContext } from "../contexts/UserContextProvider";
 import { useNavigate } from "react-router-dom";
+import RotateLoader from "react-spinners/RotateLoader";
 import { LevelDescription } from "../utilz/Constant";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
@@ -44,7 +45,7 @@ export default function Ranking() {
   return (
     <div className=" flex w-full">
       <div className=" w-1/5"></div>
-      {listUser.length > 0 && (
+      {listUser.length > 0 ? (
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -157,6 +158,11 @@ export default function Ranking() {
             </div>
           </motion.div>
         </motion.div>
+      ) : (
+        <div className=" w-4/5  font-opensans mt-6 flex justify-center items-center h-32  text-black">
+          {" "}
+          <RotateLoader color="#14e1cf" />
+        </div>
       )}
     </div>
   );
