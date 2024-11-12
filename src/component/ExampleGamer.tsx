@@ -103,7 +103,14 @@ export default function ExampleGamer({
   const { isLoading, setLoading } = useFetch();
   const [error, changeerror] = useState("none");
   const [tempscore, changetempscore] = useState<number>(100);
-
+  const temparray = shuffleArray([
+    ...getRandomElements({
+      arr: round,
+      count: 3,
+      answer: data.answer,
+    }),
+    { correct: true, text: data.answer },
+  ]);
   const onSubmitHandler = (inputanswer: string) => {
     setLoading(true);
     if (inputanswer !== data.answer) {
@@ -172,14 +179,7 @@ export default function ExampleGamer({
         {isLoading ? (
           <>
             <div className=" grid grid-cols-2 grid-rows-2 w-full h-full gap-6 pt-16">
-              {shuffleArray([
-                ...getRandomElements({
-                  arr: round,
-                  count: 3,
-                  answer: data.answer,
-                }),
-                { correct: true, text: data.answer },
-              ]).map((btn) => {
+              {temparray.map((btn) => {
                 return (
                   <ButtonExampleGame
                     correct={btn.correct}
@@ -194,14 +194,7 @@ export default function ExampleGamer({
           </>
         ) : (
           <div className=" grid grid-cols-2 grid-rows-2 w-full h-full gap-6 pt-16">
-            {shuffleArray([
-              ...getRandomElements({
-                arr: round,
-                count: 3,
-                answer: data.answer,
-              }),
-              { correct: true, text: data.answer },
-            ]).map((btn) => {
+            {temparray.map((btn) => {
               return (
                 <ButtonExampleGame
                   correct={btn.correct}
