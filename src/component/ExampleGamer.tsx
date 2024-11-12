@@ -103,14 +103,16 @@ export default function ExampleGamer({
   const { isLoading, setLoading } = useFetch();
   const [error, changeerror] = useState("none");
   const [tempscore, changetempscore] = useState<number>(100);
-  const temparray = shuffleArray([
-    ...getRandomElements({
-      arr: round,
-      count: 3,
-      answer: data.answer,
-    }),
-    { correct: true, text: data.answer },
-  ]);
+  const [temparray] = useState(
+    shuffleArray([
+      ...getRandomElements({
+        arr: round,
+        count: 3,
+        answer: data.answer,
+      }),
+      { correct: true, text: data.answer },
+    ])
+  );
   const onSubmitHandler = (inputanswer: string) => {
     setLoading(true);
     if (inputanswer !== data.answer) {
