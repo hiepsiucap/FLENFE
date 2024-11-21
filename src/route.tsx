@@ -6,7 +6,6 @@ import {
   Login,
   Register,
   ForgotPassword,
-  DashBoard,
   WordBank,
   DetailBook,
   GamePlay,
