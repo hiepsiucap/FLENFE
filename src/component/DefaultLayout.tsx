@@ -72,6 +72,9 @@ export default function DefaultLayout() {
               />
               <h5 className=" font-opensans text-lg ">{user.name}</h5>
             </div>
+            <h5 className=" font-opensans text-lg text-white rounded-lg bg-primary1 bg-opacity-90 py-1.5 px-4  ">
+              {user.subscription?.title || "none"}
+            </h5>
             <div className=" flex items-center space-x-2">
               <img
                 src={fire}

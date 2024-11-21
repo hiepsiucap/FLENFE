@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <DashBoard></DashBoard>,
+        element: <WordBank></WordBank>,
       },
       {
         path: "/wordbank",

@@ -23,6 +23,9 @@ const StateContext = createContext<StateContextType>({
   SetRefreshToken: () => {},
   SetNotification: () => {},
 });
+interface Subscription {
+  title: string;
+}
 interface User {
   name: string;
   email: string;
@@ -32,6 +35,7 @@ interface User {
   streak: number;
   totalscore: number;
   scoreADay: number;
+  subscription: Subscription;
   level_description: string;
 }
 interface UserContextProviderProps {
@@ -107,6 +111,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         id: user._id,
         level_description: user.level_description,
         scoreADay: user.scoreADay,
+        subscription: user.subscription,
       };
       localStorage.setItem("USER_DATA", JSON.stringify(safeUserData));
       setUser(user);
