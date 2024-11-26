@@ -12,7 +12,7 @@ import plus from "../assets/image/icons8-plus-30.png";
 const customStyles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
-    zIndex: 1000, // màu đen nhạt cho background ngoài modal
+    zIndex: 1000,
   },
   content: {
     top: "40%",
@@ -103,7 +103,7 @@ const CreateBook: React.FC = () => {
         onClick={openModal}
         className=" py-3 px-6 hidden md:block rounded-lg bg-primary text-lg text-slate-100 mr-12"
       >
-        Tạo từ mới
+        Tạo sổ từ mới
       </button>
       <button
         onClick={openModal}
@@ -114,7 +114,7 @@ const CreateBook: React.FC = () => {
           alt=""
           className=" w-6"
         />
-        <p>từ mới</p>
+        <p>sổ từ mới</p>
       </button>
       <Modal
         isOpen={modalIsOpen}

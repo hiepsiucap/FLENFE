@@ -245,7 +245,7 @@ export default function Gamer({
 
   return (
     <div className=" flex w-full ">
-      <div className=" w-1/6 md:w-1/5 "></div>
+      <div className="hidden md:block w-1/6 md:w-1/5 "></div>
       {!finish ? (
         <div className=" w-full md:w-4/5  font-opensans mt-6 flex flex-col justify-center items-center py-12   text-black">
           <div className=" w-full flex justify-center space-x-2">

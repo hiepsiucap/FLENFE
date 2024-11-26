@@ -11,6 +11,7 @@ import { LevelDescription } from "../utilz/Constant";
 import book from "../assets/image/agenda.png";
 import dangxuat from "../assets/image/dangxuat.png";
 import { useEffect, useState } from "react";
+import Hamburger from "./Hambuger";
 import ModalGetCurrentUser from "./CurrentUser";
 import cheems from "../assets/image/cheems.png";
 import {
@@ -147,16 +148,13 @@ export default function DefaultLayout() {
           <nav className=" md:container mx-auto flex justify-between py-3   ">
             <ul className="flex space-x-16 px-4 justify-between w-full  font-lexend items-center text-primary ">
               <li className=" flex space-x-2 items-center  font-medium">
-                <Link
-                  className=" font-bold text-2xl pb-2"
-                  to="/"
-                >
-                  {" "}
-                  <Logo
-                    width={60}
-                    height={60}
-                  ></Logo>
-                </Link>
+                <Hamburger></Hamburger>
+              </li>
+              <li>
+                <Logo
+                  width={50}
+                  height={50}
+                ></Logo>
               </li>
               <div className=" flex items-center space-x-4">
                 <li className=" flex space-x-2 justify-between font-medium">
@@ -166,19 +164,19 @@ export default function DefaultLayout() {
                   >
                     <img
                       src={user.ava}
-                      className=" w-12 h-12"
+                      className=" w-8 h-8"
                       alt=""
                     />
-                    <h5 className=" font-opensans text-lg ">{user.name}</h5>
+                    <h5 className=" font-opensans  ">{user.name}</h5>
                   </button>
                 </li>
                 {/* <li className=" flex space-x-2 justify-between font-medium">
                   <Hamburger></Hamburger>
                 </li> */}
-                <h5 className=" font-opensans text-lg text-white rounded-lg bg-primary1 bg-opacity-90 py-1.5 px-4  ">
+                {/* <h5 className=" font-opensans text-lg text-white rounded-lg bg-primary1 bg-opacity-90 py-1.5 px-4  ">
                   {user.subscription?.title || "none"}
-                </h5>
-                <div className=" flex items-center space-x-2">
+                </h5> */}
+                {/* <div className=" flex items-center space-x-2">
                   <div className=" w-12 h-12">
                     <CircularProgressbarWithChildren
                       styles={buildStyles({
@@ -202,7 +200,7 @@ export default function DefaultLayout() {
                       />
                     </CircularProgressbarWithChildren>
                   </div>
-                </div>
+                </div> */}
               </div>
               {/* <li className=" flex space-x-2   items-center text-md font-light">
               <Link
@@ -256,8 +254,8 @@ export default function DefaultLayout() {
           </nav>
         </div>
       </div>
-      <div className=" w-full pt-20">
-        <div className="md:w-1/6 px-3 md:px-0 z-40 fixed flex flex-col  items-center justify-start py-12 bg-white shadow-md h-screen">
+      <div className="  w-full pt-20">
+        <div className="hidden  md:w-1/6 px-3 md:px-0 z-40 fixed md:flex flex-col  items-center justify-start py-12 bg-white shadow-md h-screen">
           <Link
             to="/playgame"
             className={

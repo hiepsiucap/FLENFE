@@ -79,7 +79,7 @@ const CharacterInput: React.FC<CharacterInputProps> = ({
   };
   return (
     <div className="flex flex-col items-center space-y-4">
-      {chars.length > 8 && window.innerWidth < 760 ? (
+      {chars.length > 10 && window.innerWidth < 760 ? (
         <div className="grid grid-cols-8   gap-1 ">
           {chars.map((char, index) => (
             <input

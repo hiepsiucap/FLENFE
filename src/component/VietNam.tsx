@@ -99,7 +99,7 @@ export default function VietNam({
     }
   };
   return (
-    <div className=" bg-white rounded-lg shadow-lg md:w-4/5 mx-2 mr-3 md:mx-0 md:mr-0 flex flex-col justify-between h-custom2 py-12 pb-24 px-12">
+    <div className=" bg-white rounded-lg shadow-lg md:w-4/5 mx-2 mr-2 md:mx-0 md:mr-0 flex flex-col justify-between h-custom2 py-12 pb-24 px-12">
       <div>
         <div className=" font-semibold text-lg md:text-2xl">
           Nhập vào từ vựng của bạn

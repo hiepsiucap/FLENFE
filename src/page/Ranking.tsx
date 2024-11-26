@@ -44,13 +44,13 @@ export default function Ranking() {
   }, []);
   return (
     <div className=" flex w-full">
-      <div className=" relative -z-50 w-1/6 md:w-1/5 "></div>
+      <div className=" hidden md:block relative -z-50 w-1/6 md:w-1/5 "></div>
       {listUser.length > 0 ? (
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className=" md:w-4/5 w-5/6  font-opensans mt-6 mr-3 md:mr-0  text-black"
+          className=" md:w-4/5  w-full ml-24 md:ml-0   font-opensans mt-6  md:mr-0  text-black"
         >
           <h2 className=" text-center font-semibold  text-2xl  text-primary">
             Bảng xếp hạng điểm{" "}
@@ -60,7 +60,7 @@ export default function Ranking() {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className=" flex ml-12 w-full  md:px-24 -z-10 md:w-2/3 md:mx-auto py-6 flex-col space-y-4"
+              className=" flex  w-full  md:px-24 -z-10 md:w-2/3 md:mx-auto py-6 flex-col space-y-4"
             >
               {listUser.map((topuser, index) => {
                 return (
@@ -126,7 +126,7 @@ export default function Ranking() {
               myrank < 3
                 ? "border-primary bg-primary bg-opacity-25  shadow-lg"
                 : "border-primary "
-            }  border-2 ml-12  rounded-xl shadow-2xl px-4 py-2 w-full md:w-2/3  md:mx-auto   items-center justify-between`}
+            }  border-2   rounded-xl shadow-2xl px-4 py-2 w-full md:w-2/3  md:mx-auto   items-center justify-between`}
           >
             <div className=" flex justify-start space-x-2 items-center">
               <div className=" w-fit font-semibold text-primary text-sm md:text-xl">
@@ -166,7 +166,7 @@ export default function Ranking() {
           </motion.div>
         </motion.div>
       ) : (
-        <div className=" w-4/5  font-opensans mt-6 flex justify-center items-center h-32  text-black">
+        <div className=" md:w-4/5 w-full  font-opensans mt-6 flex justify-center items-center h-32  text-black">
           {" "}
           <RotateLoader color="#14e1cf" />
         </div>

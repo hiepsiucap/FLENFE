@@ -158,12 +158,12 @@ export default function GamePlay() {
     <>
       {flashcard?.length > 0 && !isplay ? (
         <div className=" flex w-full font-opensans">
-          <div className=" md:w-1/5"></div>
+          <div className=" hidden md:block md:w-1/5"></div>
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="pl-32 w-5/6 md:w-4/5 flex flex-col items-center space-y-4 py-12  font-opensans mt-6  text-black"
+            className=" mx-auto md:m-0  md:w-4/5 flex flex-col items-center space-y-4 py-12  font-opensans mt-6  text-black"
           >
             <div className=" w-full flex justify-center space-x-2">
               <Review
@@ -183,7 +183,7 @@ export default function GamePlay() {
                     });
                   }, 100);
                 }}
-                className=" absolute md:left-8 -left-10 bg-white top-1/2 z-10 rounded-full border p-2 border-gray-600 translate-x-1/2"
+                className=" absolute md:left-8 -left-4 bg-white top-1/2 z-10 rounded-full border p-2 border-gray-600 translate-x-1/2"
               >
                 <button className=" hidden"></button>
                 <svg
@@ -220,7 +220,7 @@ export default function GamePlay() {
                     });
                   }, 100);
                 }}
-                className=" absolute md:right-20 right-1 bg-white  top-1/2 rounded-full border p-2 border-gray-600 translate-x-1/2"
+                className=" absolute md:right-20 right-6 bg-white  top-1/2 rounded-full border p-2 border-gray-600 translate-x-1/2"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -270,12 +270,12 @@ export default function GamePlay() {
           className=" flex w-full font-opensans"
           onSubmit={onSumbitHandler}
         >
-          <div className=" w-1/6 md:w-1/5"></div>
+          <div className=" hidden   md:w-1/5"></div>
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className=" w-4/5 flex flex-col items-center md:space-y-4 space-y-2 md:py-12 py-6  font-opensans mt-6  text-black"
+            className="md:pl-32 mx-auto md:w-4/5 px-2 flex flex-col items-center md:space-y-4 space-y-2 md:py-12 py-6  font-opensans mt-6  text-black"
           >
             <div className=" flex items-center space-x-2">
               <img

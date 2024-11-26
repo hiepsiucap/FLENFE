@@ -4,10 +4,14 @@ import React, { useState, useRef } from "react";
 import Modal from "react-modal";
 import hamburger from "../assets/image/hamburger.png";
 import { Link } from "react-router-dom";
+import Podium from "../assets/image/podium.png";
+import Console from "../assets/image/console.png";
+import book from "../assets/image/agenda.png";
 const customStyles = {
   content: {
     top: "0%",
-    left: "50%",
+    right: "50%",
+    left: "0%",
     height: "100%",
     width: "50%",
     bottom: "auto",
@@ -68,43 +72,59 @@ const Hamburger: React.FC = () => {
               Trang chủ
             </Link>{" "}
           </li>
-          <li className=" flex space-x-2 items-center text-md font-light">
+          <li className=" flex w-full space-x-2 items-center text-md font-light">
             <Link
               onClick={closeModal}
+              to="/ranking"
               className={
-                location.pathname === "/product"
-                  ? " border-b-2 pb-2 px-2 border-gray-600"
-                  : " border-b-2 pb-2 px-2 border-white"
+                location.pathname === "/ranking"
+                  ? "flex w-full justify-center bg-secondary rounded-md space-x-2 py-4  items-center"
+                  : "flex w-full justify-center  rounded-md space-x-2 py-4  items-center"
               }
-              to="/product"
             >
-              Sản phẩm
+              <img
+                src={Podium}
+                className=" w-8 h-8"
+                alt=""
+              />
+
+              <p className="   font-opensans">Bảng xếp hạng</p>
             </Link>
           </li>
-          <li className=" flex space-x-2 items-center text-md font-light">
+          <li className=" w-full flex space-x-2 items-center text-md font-light">
             <Link
               onClick={closeModal}
-              to="/description"
+              to="/wordbank"
               className={
-                location.pathname === "/description"
-                  ? " border-b-2 pb-2 px-2 border-gray-600"
-                  : " border-b-2 pb-2 px-2 border-white"
+                location.pathname === "/wordbank"
+                  ? "flex w-full justify-center bg-secondary rounded-md space-x-2 py-4  items-center"
+                  : "flex w-full justify-center  rounded-md space-x-2 py-4  items-center"
               }
             >
-              Hướng dẫn
+              <img
+                src={book}
+                className=" w-8 h-8"
+                alt=""
+              />
+              <p className="   font-opensans">Sổ từ vựng</p>
             </Link>
           </li>
-          <li className=" flex space-x-2 items-center text-md font-light">
+          <li className=" flex space-x-2 items-center w-full text-md font-light">
             <Link
               onClick={closeModal}
-              to="/posts"
+              to="/playgame"
               className={
-                location.pathname === "/posts"
-                  ? " border-b-2 pb-2 px-2 border-gray-600"
-                  : " border-b-2 pb-2 px-2 border-white"
+                location.pathname === "/playgame"
+                  ? "flex w-full justify-center bg-secondary rounded-md space-x-2 py-4  items-center"
+                  : "flex w-full justify-center  rounded-md space-x-2 py-4  items-center"
               }
             >
-              Tin tức
+              <img
+                src={Console}
+                className=" w-8 h-8"
+                alt=""
+              />
+              <p className="  font-opensans">Chơi game</p>
             </Link>
           </li>
         </ul>
