@@ -245,9 +245,9 @@ export default function Gamer({
 
   return (
     <div className=" flex w-full ">
-      <div className=" w-1/5 "></div>
+      <div className=" w-1/6 md:w-1/5 "></div>
       {!finish ? (
-        <div className=" w-4/5  font-opensans mt-6 flex flex-col justify-center items-center py-12   text-black">
+        <div className=" w-full md:w-4/5  font-opensans mt-6 flex flex-col justify-center items-center py-12   text-black">
           <div className=" w-full flex justify-center space-x-2">
             <Review
               max={round.length}
@@ -298,9 +298,9 @@ export default function Gamer({
         </div>
       ) : (
         <>
-          <div className=" w-4/5  font-opensans mt-6 flex flex-col justify-center items-center py-12   text-black">
-            <div className=" bg-white rounded-lg shadow-lg w-4/5 flex flex-col items-center space-y-12  h-custom2 py-12 pb-12 px-12">
-              <p className=" text-3xl font-semibold pt-6 text-primary">
+          <div className=" md:w-4/5  font-opensans mt-6 flex flex-col justify-center items-center py-12   text-black">
+            <div className=" bg-white rounded-lg shadow-lg md:w-4/5 mx-2 mr-3  flex flex-col items-center space-y-12  h-custom2 py-12 pb-12 px-12">
+              <p className=" md:text-3xl text-xl text-center md:text-start font-semibold pt-6 text-primary">
                 Chúc mừng bạn đã hoàn thành bài thi
               </p>
               <img
@@ -311,7 +311,7 @@ export default function Gamer({
                 <p className=" font-light text-lg">
                   Số từ ôn tập được: {flashCard.length} từ
                 </p>
-                <p className=" text-2xl font-semibold  text-primary">
+                <p className=" md:text-2xl text-lg font-semibold  text-primary">
                   Số điểm đạt được: {totalscore}/ {round.length * 100}
                 </p>
               </div>

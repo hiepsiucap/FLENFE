@@ -16,6 +16,7 @@ export default {
       },
       width: {
         custom: "500px",
+        custommobile: "330px",
       },
       colors: {
         primary: "#37AFE1",

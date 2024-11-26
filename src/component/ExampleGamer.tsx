@@ -163,16 +163,18 @@ export default function ExampleGamer({
   };
   console.log(currentvalue, total);
   return (
-    <div className=" bg-white rounded-lg shadow-lg w-4/5 flex flex-col justify-between h-custom2 py-12 pb-24 px-12">
+    <div className=" bg-white rounded-lg shadow-lg md:w-4/5 mx-2 mr-3 md:mx-0 md:mr-0 flex flex-col justify-between h-custom2 py-12 pb-24 md:px-12 px-4">
       <div>
-        <div className=" font-semibold text-2xl">Nhập vào từ vựng của bạn</div>
-        <div className=" flex items-end space-x-4 py-4">
+        <div className=" font-semibold text-lg md:text-2xl">
+          Nhập vào từ vựng của bạn
+        </div>
+        <div className=" flex flex-col items-center md:flex-row md:items-end space-x-4 py-4">
           <img
             src={data?.image}
             className=" w-32 h-32 rounded-md"
             alt=""
           />
-          <p className=" font-semibold text-2xl ">
+          <p className=" font-semibold md:text-2xl ">
             {replaceWordWithBlank(data.example, data.answer)}
           </p>
         </div>
@@ -180,7 +182,7 @@ export default function ExampleGamer({
       <div className=" w-full h-full">
         {isLoading ? (
           <>
-            <div className=" grid grid-cols-2 grid-rows-2 w-full h-full gap-6 pt-16">
+            <div className=" grid grid-cols-2 grid-rows-2 w-full h-full md:gap-6 gap-2 pt-16">
               {temparray.map((btn) => {
                 return (
                   <ButtonExampleGame
@@ -195,7 +197,7 @@ export default function ExampleGamer({
             </div>
           </>
         ) : (
-          <div className=" grid grid-cols-2 grid-rows-2 w-full h-full gap-6 pt-16">
+          <div className=" grid grid-cols-2 grid-rows-2 w-full h-full md:gap-6 gap-2 pt-16">
             {temparray.map((btn) => {
               return (
                 <ButtonExampleGame

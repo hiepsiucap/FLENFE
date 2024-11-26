@@ -58,14 +58,19 @@ export default function WordBank() {
       >
         <div className=" flex justify-between items-center">
           <div>
-            <h3 className=" font-opensans  text-3xl">Sổ từ của tôi</h3>
-            <div className=" text-gray-700 py-2">
+            <h3 className=" font-opensans text-2xl  md:text-3xl">
+              Sổ từ của tôi
+            </h3>
+            <div className=" hidden md:block text-gray-700 py-2">
               {data?.length} sổ từ |{" "}
               {data?.reduce(
                 (total, book) => (total += book?.book?.numsofcard),
                 0
               ) + " "}
               từ vựng đã lưu | 0 từ vựng thành thạo
+            </div>
+            <div className=" md:hidden text-gray-700 pb-2 md:py-2">
+              {data?.length} sổ từ đã lưu
             </div>
           </div>
           <CreateBook></CreateBook>

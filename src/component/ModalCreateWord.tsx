@@ -9,10 +9,12 @@ import { useNavigate } from "react-router-dom";
 import { useStateUserContext } from "../contexts/UserContextProvider";
 import { GetPostRequestWithCre } from "../utilz/Request/postRequest";
 import Swal from "sweetalert2";
+import plus from "../assets/image/icons8-plus-30.png";
 import { useParams } from "react-router-dom";
 const customStyles = {
   overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // màu đen nhạt cho background ngoài modal
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    zIndex: 1000,
   },
   content: {
     top: "40%",
@@ -22,7 +24,7 @@ const customStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     backgroundColor: "#FFFFFF",
-    width: "40%",
+    width: window.innerWidth < 768 ? "80%" : "40%",
     padding: "20px",
     borderRadius: "10px",
   },
@@ -160,9 +162,20 @@ const CreateWord: React.FC = () => {
     <div>
       <button
         onClick={openModal}
-        className=" py-3 px-6 rounded-lg bg-primary text-lg text-slate-100 mr-12"
+        className=" py-3 px-6 hidden md:block rounded-lg bg-primary text-lg text-slate-100 mr-12"
       >
         Tạo từ mới
+      </button>
+      <button
+        onClick={openModal}
+        className=" py-2  px-2 md:hidden rounded-lg flex  items-end  space-x-1 bg-primary1  text-slate-100 mr-6"
+      >
+        <img
+          src={plus}
+          alt=""
+          className=" w-6"
+        />
+        <p>từ mới</p>
       </button>
       <Modal
         isOpen={modalIsOpen}

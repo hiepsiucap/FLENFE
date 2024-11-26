@@ -79,26 +79,49 @@ const CharacterInput: React.FC<CharacterInputProps> = ({
   };
   return (
     <div className="flex flex-col items-center space-y-4">
-      <div className="flex space-x-2">
-        {chars.map((char, index) => (
-          <input
-            key={index}
-            ref={(el) => (inputRefs.current[index] = el)}
-            type="text"
-            value={char}
-            onChange={(e) => handleChange(index, e.target.value)}
-            onKeyDown={(e) => handleKeyDown(index, e)}
-            className={
-              error == "error"
-                ? "w-12 h-12 animate-shake text-center font-semibold text-xl border-2 border-red-500 text-red-500 rounded  focus:outline-none"
-                : error == "none"
-                ? "w-12 h-12 text-center  font-semibold text-xl border-2 border-gray-300 rounded  focus:outline-none"
-                : "w-12 h-12 text-center animate-shake font-semibold text-xl border-2 border-green-500 rounded text-green-500  focus:outline-none"
-            }
-            maxLength={1}
-          />
-        ))}
-      </div>
+      {chars.length > 8 && window.innerWidth < 760 ? (
+        <div className="grid grid-cols-8   gap-1 ">
+          {chars.map((char, index) => (
+            <input
+              key={index}
+              ref={(el) => (inputRefs.current[index] = el)}
+              type="text"
+              value={char}
+              onChange={(e) => handleChange(index, e.target.value)}
+              onKeyDown={(e) => handleKeyDown(index, e)}
+              className={
+                error == "error"
+                  ? "md:w-12 md:h-12 w-8 h-8 animate-shake text-center font-semibold md:text-xl border-2 border-red-500 text-red-500 rounded  focus:outline-none"
+                  : error == "none"
+                  ? "md:w-12 md:h-12 w-8 h-8 text-center  font-semibold md:text-xl border-2 border-gray-300 rounded  focus:outline-none"
+                  : "md:w-12 md:h-12 w-8 h-8 text-center animate-shake font-semibold md:text-xl border-2 border-green-500 rounded text-green-500  focus:outline-none"
+              }
+              maxLength={1}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="flex md:space-x-2    gap-1 ">
+          {chars.map((char, index) => (
+            <input
+              key={index}
+              ref={(el) => (inputRefs.current[index] = el)}
+              type="text"
+              value={char}
+              onChange={(e) => handleChange(index, e.target.value)}
+              onKeyDown={(e) => handleKeyDown(index, e)}
+              className={
+                error == "error"
+                  ? "md:w-12 md:h-12 w-8 h-8 animate-shake text-center font-semibold md:text-xl border-2 border-red-500 text-red-500 rounded  focus:outline-none"
+                  : error == "none"
+                  ? "md:w-12 md:h-12 w-8 h-8 text-center  font-semibold md:text-xl border-2 border-gray-300 rounded  focus:outline-none"
+                  : "md:w-12 md:h-12 w-8 h-8 text-center animate-shake font-semibold md:text-xl border-2 border-green-500 rounded text-green-500  focus:outline-none"
+              }
+              maxLength={1}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

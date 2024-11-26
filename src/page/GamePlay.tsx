@@ -158,12 +158,12 @@ export default function GamePlay() {
     <>
       {flashcard?.length > 0 && !isplay ? (
         <div className=" flex w-full font-opensans">
-          <div className=" w-1/5"></div>
+          <div className=" md:w-1/5"></div>
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className=" w-4/5 flex flex-col items-center space-y-4 py-12  font-opensans mt-6  text-black"
+            className="pl-32 w-5/6 md:w-4/5 flex flex-col items-center space-y-4 py-12  font-opensans mt-6  text-black"
           >
             <div className=" w-full flex justify-center space-x-2">
               <Review
@@ -171,7 +171,7 @@ export default function GamePlay() {
                 value={now + 1}
               ></Review>
             </div>
-            <div className=" relative w-4/5 mx-auto py-12 flex items-center justify-center">
+            <div className=" relative md:w-4/5 md:mx-auto py-12 flex items-center justify-center">
               <button
                 type="button"
                 onClick={() => {
@@ -183,7 +183,7 @@ export default function GamePlay() {
                     });
                   }, 100);
                 }}
-                className=" absolute left-8 top-1/2 rounded-full border p-2 border-black translate-x-1/2"
+                className=" absolute md:left-8 -left-10 bg-white top-1/2 z-10 rounded-full border p-2 border-gray-600 translate-x-1/2"
               >
                 <button className=" hidden"></button>
                 <svg
@@ -220,7 +220,7 @@ export default function GamePlay() {
                     });
                   }, 100);
                 }}
-                className=" absolute right-20 top-1/2 rounded-full border p-2 border-black translate-x-1/2"
+                className=" absolute md:right-20 right-1 bg-white  top-1/2 rounded-full border p-2 border-gray-600 translate-x-1/2"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -270,12 +270,12 @@ export default function GamePlay() {
           className=" flex w-full font-opensans"
           onSubmit={onSumbitHandler}
         >
-          <div className=" w-1/5"></div>
+          <div className=" w-1/6 md:w-1/5"></div>
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className=" w-4/5 flex flex-col items-center space-y-4 py-12  font-opensans mt-6  text-black"
+            className=" w-4/5 flex flex-col items-center md:space-y-4 space-y-2 md:py-12 py-6  font-opensans mt-6  text-black"
           >
             <div className=" flex items-center space-x-2">
               <img
@@ -283,7 +283,7 @@ export default function GamePlay() {
                 alt=""
                 className=" w-12 h-12"
               />
-              <h3 className="font-semibold text-4xl">Chơi game</h3>
+              <h3 className="font-semibold text-3xl md:text-4xl">Chơi game</h3>
             </div>
             <div className=" font-semibold items-end  flex space-x-2 pb-6">
               <p>Số từ muốn chơi: </p>
@@ -305,9 +305,9 @@ export default function GamePlay() {
               </select>
             </div>
             <div className=" bg-opacity-20 shadow-lg  rounded-2xl w-fit bg-white py-8 px-12 ">
-              <div className=" flex  justify-start">
+              <div className=" flex md:flex-row space-y-1 md:space-y-0 flex-col items-center   md:justify-start">
                 {" "}
-                <div className=" flex space-x-2  justify-between text-gray-900 font-semibold">
+                <div className=" flex space-x-2  justify-between  text-gray-900 font-semibold">
                   Chơi với:
                 </div>
                 <select
@@ -344,10 +344,10 @@ export default function GamePlay() {
               <img
                 src={abcd}
                 alt=""
-                className=" w-32 h-32  "
+                className=" w-24 h-24 md:w-32 md:h-32  "
               />
             </div>
-            <div className=" font-semibold text-lg ">
+            <div className=" font-semibold text-center md:text-start text-lg ">
               Bao gồm các dạng câu hỏi như: Trắc nghiệm, điền từ, nhập từ{" "}
             </div>
             <div className=" py-6">

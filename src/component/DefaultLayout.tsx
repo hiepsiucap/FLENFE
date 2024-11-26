@@ -57,7 +57,7 @@ export default function DefaultLayout() {
   };
   return (
     <div className="bg-slate-50 min-h-screen">
-      <div className=" fixed w-full   bg-white shadow-sm">
+      <div className=" fixed w-full  z-40  bg-white shadow-sm">
         <nav className="hidden md:container p-1 pt-2 mx-auto md:flex items-center justify-between">
           <div className=" flex">
             <ModalGetCurrentUser
@@ -257,7 +257,7 @@ export default function DefaultLayout() {
         </div>
       </div>
       <div className=" w-full pt-20">
-        <div className="md:w-1/6 px-3 md:px-0 fixed flex flex-col  items-center justify-start py-12 bg-white shadow-md h-screen">
+        <div className="md:w-1/6 px-3 md:px-0 z-40 fixed flex flex-col  items-center justify-start py-12 bg-white shadow-md h-screen">
           <Link
             to="/playgame"
             className={

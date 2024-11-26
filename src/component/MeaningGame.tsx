@@ -94,16 +94,18 @@ export default function Meaning({
     changeinputanswer(data);
   };
   return (
-    <div className=" bg-white rounded-lg shadow-lg w-4/5 flex flex-col justify-between h-custom2 py-12 pb-24 px-12">
+    <div className=" bg-white rounded-lg shadow-lg text-lg md:w-4/5 mx-2 mr-3 md:mx-0 md:mr-0 flex flex-col justify-between h-custom2 py-12 pb-24 md:px-12 px-4">
       <div>
-        <div className=" font-semibold text-2xl">Nhập vào từ vựng của bạn</div>
-        <div className=" flex items-end space-x-4 py-4">
+        <div className=" font-semibold text-lg text-center md:text-2xl">
+          Nhập vào từ vựng của bạn
+        </div>
+        <div className=" flex flex-col md:flex-row items-center md:items-end space-x-4 py-4">
           <img
             src={data?.image}
             className=" w-32 h-32 rounded-md"
             alt=""
           />
-          <p className=" font-semibold text-2xl ">{data.example}</p>
+          <p className=" font-semibold md:text-2xl ">{data.example}</p>
         </div>
       </div>
       <form onSubmit={onSubmitHandler}>

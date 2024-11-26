@@ -99,10 +99,12 @@ export default function VietNam({
     }
   };
   return (
-    <div className=" bg-white rounded-lg shadow-lg w-4/5 flex flex-col justify-between h-custom2 py-12 pb-24 px-12">
+    <div className=" bg-white rounded-lg shadow-lg md:w-4/5 mx-2 mr-3 md:mx-0 md:mr-0 flex flex-col justify-between h-custom2 py-12 pb-24 px-12">
       <div>
-        <div className=" font-semibold text-2xl">Nhập vào từ vựng của bạn</div>
-        <div className=" flex items-end space-x-4 py-4">
+        <div className=" font-semibold text-lg md:text-2xl">
+          Nhập vào từ vựng của bạn
+        </div>
+        <div className=" flex flex-col md:flex-row items-center space-y-4 md:items-end space-x-4 py-4">
           <img
             src={data?.image}
             className=" w-32 h-32 rounded-md"

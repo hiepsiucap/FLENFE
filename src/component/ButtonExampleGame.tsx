@@ -22,10 +22,10 @@ export default function ButtonExampleGame({
       disabled={disabled}
       className={
         (error === "success" || error === "error") && correct
-          ? "bg-green-500 animate-shake scale-105  w-full shadow-sm  text-xl   rounded-lg "
+          ? "bg-green-500 animate-shake scale-105  w-full shadow-sm text-lg  md:text-xl   rounded-lg "
           : !wrong
-          ? "bg-slate-100 w-full shadow-sm  text-xl   rounded-lg"
-          : "bg-red-500 animate-shake scale-105  w-full shadow-sm  text-xl   rounded-lg"
+          ? "bg-slate-100 w-full shadow-sm   md:text-xl text-lg  rounded-lg"
+          : "bg-red-500 animate-shake scale-105  w-full shadow-sm   md:text-xl text-lg  rounded-lg"
       }
       onClick={() => {
         onSubmit(text);

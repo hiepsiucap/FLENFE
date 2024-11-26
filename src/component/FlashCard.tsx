@@ -75,7 +75,7 @@ const Flashcard = ({
     FetchAu();
   }, [fetchAudio, info, setIsFlipped]);
   return (
-    <div className="group h-custom w-custom [perspective:1000px]">
+    <div className="group h-custom md:w-custom w-custommobile [perspective:1000px]">
       <div
         className={`relative h-full w-full rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""

@@ -98,13 +98,16 @@ export default function DetailBook() {
   };
   return (
     <div className=" flex w-full">
-      <div className=" w-1/5"></div>
-      <div className=" w-4/5  font-opensans mt-6  text-black">
+      <div className=" w-1/6 md:w-1/5"></div>
+      <div className=" w-5/6 md:w-4/5  font-opensans mt-6  text-black">
         <div className=" flex justify-between items-center">
           <div>
             <h3 className=" font-opensans  text-3xl">Sổ từ của tôi</h3>
-            <div className=" text-gray-700 py-2">
+            <div className=" md:block hidden text-gray-700 py-2">
               {listword?.length} sổ từ | từ vựng đã lưu | 0 từ vựng thành thạo
+            </div>
+            <div className=" md:hidden text-gray-700 py-2">
+              {listword?.length} từ | 0 từ vựng thành thạo
             </div>
           </div>
           {audioUrl && (
@@ -121,13 +124,13 @@ export default function DetailBook() {
           )}
           <CreateWord></CreateWord>
         </div>
-        <div className=" grid grid-cols-2 gap-10 pb-10">
+        <div className=" grid md:grid-cols-2 grid-cols-1 gap-10 pb-10 pr-3 md:pr-0">
           {listword ? (
             listword.map((word) => {
               return (
                 <div
                   key={word._id}
-                  className=" shadow-lg bg-white py-10 rounded-lg px-10 flex justify-start space-x-5"
+                  className=" shadow-lg bg-white  py-10 rounded-lg md:px-10 px-2 flex flex-col md:flex-row items-center md:justify-start space-x-5"
                 >
                   <div className=" flex w-fit min-w-40 flex-col">
                     <img
@@ -137,7 +140,7 @@ export default function DetailBook() {
                     />
                   </div>
                   <div className=" flex w-full flex-col">
-                    <div className=" w-full flex items-center justify-between">
+                    <div className=" w-full flex items-center justify-between pr-2 md:pr-0">
                       {!isLoading || idaudio !== word._id ? (
                         <button
                           onClick={() => {
@@ -190,7 +193,7 @@ export default function DetailBook() {
                     <div className=" font-  text-gray-600 py-2 ">
                       {word.meaning}
                     </div>
-                    <div className=" font-light text-gray-600 ">
+                    <div className=" font-light text-gray-600 pr-2 md:pr-0 ">
                       {word?.example && "Example: " + word?.example}
                     </div>
                   </div>
