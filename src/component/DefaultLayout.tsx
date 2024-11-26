@@ -11,6 +11,7 @@ import { LevelDescription } from "../utilz/Constant";
 import book from "../assets/image/agenda.png";
 import dangxuat from "../assets/image/dangxuat.png";
 import { useEffect, useState } from "react";
+import ModalGetCurrentUser from "./CurrentUser";
 import cheems from "../assets/image/cheems.png";
 import {
   buildStyles,
@@ -30,6 +31,7 @@ export default function DefaultLayout() {
   } = useStateUserContext();
   const location = useLocation();
   const [total, setTotal] = useState<number>(0);
+  const [isOpen, changeOpen] = useState<boolean>(false);
   useEffect(() => {
     const GetTotal = async () => {
       const response = await GetRequestWithCre({
@@ -58,20 +60,27 @@ export default function DefaultLayout() {
       <div className=" fixed w-full   bg-white shadow-sm">
         <nav className=" md:container p-1 pt-2 mx-auto flex items-center justify-between">
           <div className=" flex">
+            <ModalGetCurrentUser
+              modalIsOpen={isOpen}
+              changeOpen={changeOpen}
+            ></ModalGetCurrentUser>
             <Logo
               width={70}
               height={70}
             ></Logo>
           </div>
           <div className=" flex items-center space-x-12 ">
-            <div className=" flex items-center space-x-2">
+            <button
+              onClick={() => changeOpen(true)}
+              className=" flex items-center space-x-2"
+            >
               <img
                 src={user.ava}
                 className=" w-12 h-12"
                 alt=""
               />
               <h5 className=" font-opensans text-lg ">{user.name}</h5>
-            </div>
+            </button>
             <h5 className=" font-opensans text-lg text-white rounded-lg bg-primary1 bg-opacity-90 py-1.5 px-4  ">
               {user.subscription?.title || "none"}
             </h5>

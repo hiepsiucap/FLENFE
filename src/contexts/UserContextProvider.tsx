@@ -34,6 +34,7 @@ interface User {
   ava: string;
   streak: number;
   totalscore: number;
+  validDay: string;
   scoreADay: number;
   subscription: Subscription;
   level_description: string;
@@ -107,6 +108,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         ava: user.ava,
         role: user.role,
         streak: user.streak,
+        validDay: user.validDay,
         totalscore: user.totalscore,
         id: user._id,
         level_description: user.level_description,
