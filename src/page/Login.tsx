@@ -65,7 +65,7 @@ export default function Login() {
       transition={{ delay: 0.2, duration: 0.5 }}
     >
       <section className=" w-screen  h-screen bg-secondary2   font-opensans flex items-center font-light justify-center ">
-        <div className=" bg-white bg-opacity-75 min-w-64 w-1/3  rounded-md shadow-lg py-12 px-6">
+        <div className=" bg-white bg-opacity-75 min-w-64 md:w-1/3 w-3/4  rounded-md shadow-lg py-12 px-6">
           <div className=" w-full flex justify-center">
             <Logo
               width={100}

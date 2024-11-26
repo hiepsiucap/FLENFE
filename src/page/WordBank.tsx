@@ -49,7 +49,7 @@ export default function WordBank() {
   console.log(data);
   return (
     <div className=" flex w-full">
-      <div className=" w-1/5"></div>
+      <div className=" w-1/6 md:w-1/5 "></div>
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
@@ -70,7 +70,7 @@ export default function WordBank() {
           </div>
           <CreateBook></CreateBook>
         </div>
-        <div className=" grid grid-cols-3 gap-6 p-6  h-64 ">
+        <div className=" grid md:grid-cols-3 grid-cols-1  gap-6   h-64 ">
           {data?.map((book) => {
             return (
               <Link

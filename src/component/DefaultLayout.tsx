@@ -58,7 +58,7 @@ export default function DefaultLayout() {
   return (
     <div className="bg-slate-50 min-h-screen">
       <div className=" fixed w-full   bg-white shadow-sm">
-        <nav className=" md:container p-1 pt-2 mx-auto flex items-center justify-between">
+        <nav className="hidden md:container p-1 pt-2 mx-auto md:flex items-center justify-between">
           <div className=" flex">
             <ModalGetCurrentUser
               modalIsOpen={isOpen}
@@ -143,9 +143,121 @@ export default function DefaultLayout() {
             </button>
           </div>
         </nav>
+        <div className=" block md:hidden">
+          <nav className=" md:container mx-auto flex justify-between py-3   ">
+            <ul className="flex space-x-16 px-4 justify-between w-full  font-lexend items-center text-primary ">
+              <li className=" flex space-x-2 items-center  font-medium">
+                <Link
+                  className=" font-bold text-2xl pb-2"
+                  to="/"
+                >
+                  {" "}
+                  <Logo
+                    width={60}
+                    height={60}
+                  ></Logo>
+                </Link>
+              </li>
+              <div className=" flex items-center space-x-4">
+                <li className=" flex space-x-2 justify-between font-medium">
+                  <button
+                    onClick={() => changeOpen(true)}
+                    className=" flex items-center space-x-2"
+                  >
+                    <img
+                      src={user.ava}
+                      className=" w-12 h-12"
+                      alt=""
+                    />
+                    <h5 className=" font-opensans text-lg ">{user.name}</h5>
+                  </button>
+                </li>
+                {/* <li className=" flex space-x-2 justify-between font-medium">
+                  <Hamburger></Hamburger>
+                </li> */}
+                <h5 className=" font-opensans text-lg text-white rounded-lg bg-primary1 bg-opacity-90 py-1.5 px-4  ">
+                  {user.subscription?.title || "none"}
+                </h5>
+                <div className=" flex items-center space-x-2">
+                  <div className=" w-12 h-12">
+                    <CircularProgressbarWithChildren
+                      styles={buildStyles({
+                        pathColor: "#37AFE1",
+                        strokeLinecap: "butt",
+                      })}
+                      value={
+                        user.scoreADay < total
+                          ? 100
+                          : Number(total / user.scoreADay) * 100
+                      }
+                    >
+                      <img
+                        style={{ width: 40, marginTop: -2 }}
+                        src={
+                          user.scoreADay > total
+                            ? "https://i.imgur.com/b9NyUGm.png"
+                            : cheems
+                        }
+                        alt="doge"
+                      />
+                    </CircularProgressbarWithChildren>
+                  </div>
+                </div>
+              </div>
+              {/* <li className=" flex space-x-2   items-center text-md font-light">
+              <Link
+                className={
+                  location.pathname === "/"
+                    ? " border-b-2 pb-2 px-2 border-gray-600"
+                    : " border-b-2 pb-2 px-2 border-white"
+                }
+                to="/"
+              >
+                Trang chủ
+              </Link>{" "}
+            </li>
+            <li className=" flex space-x-2 items-center text-md font-light">
+              <Link
+                className={
+                  location.pathname === "/product"
+                    ? " border-b-2 pb-2 px-2 border-gray-600"
+                    : " border-b-2 pb-2 px-2 border-white"
+                }
+                to="/product"
+              >
+                Sản phẩm
+              </Link>
+            </li>
+            <li className=" flex space-x-2 items-center text-md font-light">
+              <Link
+                to="/description"
+                className={
+                  location.pathname === "/description"
+                    ? " border-b-2 pb-2 px-2 border-gray-600"
+                    : " border-b-2 pb-2 px-2 border-white"
+                }
+              >
+                Hướng dẫn
+              </Link>
+            </li>
+            <li className=" flex space-x-2 items-center text-md font-light">
+              <Link
+                to="/posts"
+                className={
+                  location.pathname === "/posts"
+                    ? " border-b-2 pb-2 px-2 border-gray-600"
+                    : " border-b-2 pb-2 px-2 border-white"
+                }
+              >
+                Tin tức
+              </Link>
+            </li> */}
+            </ul>
+          </nav>
+        </div>
       </div>
       <div className=" w-full pt-20">
-        <div className="w-1/6 fixed flex flex-col  items-center justify-start py-12 bg-white shadow-md h-screen">
+        <div className="md:w-1/6 px-3 md:px-0 fixed flex flex-col  items-center justify-start py-12 bg-white shadow-md h-screen">
           <Link
             to="/playgame"
             className={
@@ -159,7 +271,7 @@ export default function DefaultLayout() {
               className=" w-8 h-8"
               alt=""
             />
-            <p className=" font-opensans">Chơi game</p>
+            <p className=" hidden md:block font-opensans">Chơi game</p>
           </Link>
           <Link
             to="/wordbank"
@@ -174,7 +286,7 @@ export default function DefaultLayout() {
               className=" w-8 h-8"
               alt=""
             />
-            <p className=" font-opensans">Sổ từ vựng</p>
+            <p className="  hidden md:block font-opensans">Sổ từ vựng</p>
           </Link>
           <Link
             to="/ranking"
@@ -189,7 +301,8 @@ export default function DefaultLayout() {
               className=" w-8 h-8"
               alt=""
             />
-            <p className=" font-opensans">Bảng xếp hạng</p>
+
+            <p className="  hidden md:block font-opensans">Bảng xếp hạng</p>
           </Link>
         </div>
         <div className=" w-full">
