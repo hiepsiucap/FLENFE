@@ -101,7 +101,7 @@ export default function DetailBook() {
     <div className=" flex w-full">
       <div className=" hidden md:block w-1/6 md:w-1/5"></div>
       {listword && listword?.length > 0 ? (
-        <div className=" mx-auto px-4 md:px-0 md:m-0  md:w-4/5  font-opensans mt-6  text-black">
+        <div className=" mx-auto px-4 md:px-0 md:m-0  md:w-4/5  font-opensans mt-6 md:mt-8  text-black md:pr-4">
           <div className=" flex justify-between items-center">
             <div>
               <h3 className=" font-opensans  text-3xl">Sổ từ của tôi</h3>

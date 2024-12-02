@@ -56,7 +56,7 @@ export default function WordBank() {
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className=" w-full mx-6 md:mx-0 md:w-4/5  font-opensans mt-6  text-black"
+          className=" w-full mx-6 md:mx-0 md:w-4/5  font-opensans mt-6 md:pr-6  text-black"
         >
           <div className=" flex justify-between items-center">
             <div>
