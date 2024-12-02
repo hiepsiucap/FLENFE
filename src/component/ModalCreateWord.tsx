@@ -109,21 +109,17 @@ const CreateWord: React.FC = () => {
   };
   async function fetchTranslation(text: string): Promise<string> {
     const response = await fetch(
-      `${import.meta.env.VITE_TRANSLATE_API}?key=${
-        import.meta.env.VITE_API_KEY
-      }`,
+      `${import.meta.env.VITE_API_URL_SERVER}/api/translate`,
       {
         method: "POST",
         body: JSON.stringify({
-          q: text,
-          target: "vi",
-          source: "en",
+          text,
         }),
         headers: { "Content-Type": "application/json" },
       }
     );
     const data = await response.json();
-    return data?.data?.translations[0]?.translatedText;
+    return data?.meaning;
   }
   const onSubmitHandler = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
