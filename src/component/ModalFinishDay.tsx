@@ -12,7 +12,8 @@ import { useStateUserContext } from "../contexts/UserContextProvider";
 import "react-circular-progressbar/dist/styles.css";
 const customStyles = {
   overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // màu đen nhạt cho background ngoài modal
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    zIndex: 1000, // màu đen nhạt cho background ngoài modal
   },
   content: {
     top: "50%",
