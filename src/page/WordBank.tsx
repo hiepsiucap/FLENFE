@@ -38,7 +38,7 @@ export default function WordBank() {
         accesstoken,
       });
       if (resultdata.success) {
-        changeData(resultdata.data.listbook);
+        changeData(resultdata.data.returnbook);
       } else {
         console.log(resultdata.msg);
       }

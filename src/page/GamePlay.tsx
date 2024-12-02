@@ -295,9 +295,9 @@ export default function GamePlay() {
                 onChange={onChangeData}
               >
                 {createArrayFrom(
-                  data.find((book) => book._id == submitdata.id)
+                  data?.find((book) => book._id == submitdata.id)
                     ?.dueCardsCount || 0
-                ).map((_book, index) => {
+                )?.map((_book, index) => {
                   return (
                     <option value={(index + 1).toString()}>{index + 1}</option>
                   );
@@ -317,7 +317,7 @@ export default function GamePlay() {
                   value={submitdata.id}
                   onChange={onChangeData}
                 >
-                  {data.map((book) => {
+                  {data?.map((book) => {
                     return <option value={book._id}>{book?.book.name}</option>;
                   })}
                 </select>
@@ -326,7 +326,7 @@ export default function GamePlay() {
                 <div className=" flex items-center  py-6  justify-center space-x-1">
                   <Word width={40}></Word>
                   <div className=" font-bold text-xl text-primary">
-                    {data.find((book) => book._id === submitdata.id)
+                    {data?.find((book) => book._id === submitdata.id)
                       ?.dueCardsCount || 0}
                   </div>
                 </div>
@@ -334,7 +334,7 @@ export default function GamePlay() {
                   <Write width={40}></Write>
                   <div className=" font-bold text-xl text-primary">
                     {" "}
-                    {data.find((book) => book._id == submitdata.id)
+                    {data?.find((book) => book._id == submitdata.id)
                       ?.dueCardsCount || 0}
                   </div>
                 </div>
