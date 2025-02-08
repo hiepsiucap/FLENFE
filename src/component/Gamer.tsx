@@ -58,7 +58,7 @@ export default function Gamer({
               _id: card._id,
               book: card.book,
               questionType: "meaning",
-              answer: card.text,
+              answer: card.text.toLowerCase(),
               meaning: card.meaning,
               score: 0,
               phonetic: card.phonetic,

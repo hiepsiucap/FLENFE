@@ -30,7 +30,7 @@ export default function DetailBook() {
   const [idaudio, setidaudio] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const navigate = useNavigate();
-  const [listword, changelistword] = useState<Word[]>();
+  const [listword, changelistword] = useState<Word[] | null>(null);
   useEffect(() => {
     const fetchListWord = async () => {
       if (bookId) {
@@ -40,6 +40,7 @@ export default function DetailBook() {
           refreshtoken,
         });
         if (response.success) {
+          if (response.data.listcard == 0) changelistword([]);
           changelistword(response.data.listcard);
         }
       }
@@ -100,7 +101,37 @@ export default function DetailBook() {
   return (
     <div className=" flex w-full">
       <div className=" hidden md:block w-1/6 md:w-1/5"></div>
-      {listword && listword?.length > 0 ? (
+      {listword && listword?.length === 0 ? (
+        <div className=" mx-auto px-4 md:px-0 md:m-0  md:w-4/5  font-opensans mt-6 md:mt-8  text-black md:pr-4">
+          <div className=" flex justify-between items-center">
+            <div>
+              <h3 className=" font-opensans  text-3xl">Sổ từ của tôi</h3>
+              <div className=" md:block hidden text-gray-700 py-2">
+                {listword?.length} sổ từ | từ vựng đã lưu | 0 từ vựng thành thạo
+              </div>
+              <div className=" md:hidden text-gray-700 py-2">
+                {listword?.length} từ | 0 từ vựng thành thạo
+              </div>
+            </div>
+            {audioUrl && (
+              <audio
+                ref={audioRef}
+                className=" hidden"
+                controls
+              >
+                <source
+                  src={audioUrl}
+                  type="audio/mpeg"
+                />
+              </audio>
+            )}
+            <CreateWord></CreateWord>
+          </div>
+          <p className=" flex items-center justify-center py-12 text-lg">
+            Chưa có từ nào được lưu
+          </p>
+        </div>
+      ) : listword && listword?.length > 0 ? (
         <div className=" mx-auto px-4 md:px-0 md:m-0  md:w-4/5  font-opensans mt-6 md:mt-8  text-black md:pr-4">
           <div className=" flex justify-between items-center">
             <div>

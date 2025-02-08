@@ -115,7 +115,7 @@ export default function ExampleGamer({
   );
   const onSubmitHandler = (inputanswer: string) => {
     setLoading(true);
-    if (inputanswer !== data.answer) {
+    if (inputanswer.toLowerCase() !== data.answer) {
       changeerror("error");
       playErrorSound();
       UpdateScore({

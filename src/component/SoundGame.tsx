@@ -55,7 +55,7 @@ export default function SoundGame({
   const onSubmitHandler = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    if (inputanswer !== data.answer) {
+    if (inputanswer.toLowerCase() !== data.answer) {
       changeerror("error");
       playErrorSound();
       changetempscore((prev) => {
