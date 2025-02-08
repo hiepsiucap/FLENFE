@@ -11,6 +11,7 @@ import { GetPostRequestWithCre } from "../utilz/Request/postRequest";
 import Swal from "sweetalert2";
 import plus from "../assets/image/icons8-plus-30.png";
 import { useParams } from "react-router-dom";
+import RotateLoader from "react-spinners/RotateLoader";
 const customStyles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -42,6 +43,7 @@ const CreateWord: React.FC = () => {
   const { bookId } = useParams();
   const navigate = useNavigate();
   const { accesstoken, refreshtoken } = useStateUserContext();
+  const [loading, changeloading] = useState(false);
   const { isLoading, setLoading, error, setError } = useFetch();
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const subtitle = useRef<HTMLHeadingElement | null>(null);
@@ -92,11 +94,13 @@ const CreateWord: React.FC = () => {
       console.log(searchTerm);
       if (!searchTerm.trim()) return;
       try {
+        changeloading(true);
         const returndata = await fetchDictionaryData(searchTerm);
         changeData({ name: "phonetic", data: returndata.phonetic });
         changeData({ name: "example", data: returndata.definition });
         const returndata2 = await fetchTranslation(searchTerm);
         changeData({ name: "meaning", data: returndata2 });
+        changeloading(false);
       } catch (e) {
         if (e instanceof Error) setError(e.message);
         console.log(e);
@@ -182,7 +186,7 @@ const CreateWord: React.FC = () => {
       >
         <form
           onSubmit={onSubmitHandler}
-          className=" pb-10 flex flex-col  space-y-2"
+          className=" pb-10 flex flex-col relative  space-y-2"
         >
           <div className="bg-white pb-5 w-full h-full text-center font-opensans text-2xl">
             Tạo mới từ{" "}
@@ -199,6 +203,11 @@ const CreateWord: React.FC = () => {
                 onChange={onChangeData}
                 value={data.text}
               />
+              {loading && (
+                <div className=" absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  <RotateLoader color="#14e1cf"></RotateLoader>
+                </div>
+              )}
             </div>
             <div className=" flex w-full flex-col space-x-1">
               <p className=" text-sm">Dịch nghĩa:</p>

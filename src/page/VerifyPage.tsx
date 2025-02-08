@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { GetPostRequest } from "../utilz/Request/postRequest";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+
 export default function VerifyPage() {
   const navigate = useNavigate();
   const [isVerify, changeIsVerify] = useState(false);

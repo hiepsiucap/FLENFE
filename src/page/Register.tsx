@@ -5,7 +5,7 @@ import Logo from "../assets/icon/logo";
 import { useFetch } from "../customhook";
 import { useState } from "react";
 import { GetPostRequest } from "../utilz/Request/postRequest";
-
+import success from "../assets/image/sc3.png";
 import { useStateUserContext } from "../contexts/UserContextProvider";
 interface LoginInterFace {
   email: string;
@@ -134,11 +134,15 @@ export default function Register() {
               </div>
             </form>
           ) : (
-            <div>
+            <div className=" flex flex-col space-y-5 items-center">
               {" "}
               <h5 className=" text-center text-3xl font-light pb-2">
                 Đăng ký thành công
               </h5>{" "}
+              <img
+                src={success}
+                className=" w-24 h-24"
+              ></img>
               <p>Vui lòng kiểm tra email của bạn</p>
             </div>
           )}

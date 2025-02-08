@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import { Flashcard, Gamer } from "../component";
 import Swal from "sweetalert2";
 import { GetPostRequestWithCre } from "../utilz/Request/postRequest";
+import HashLoader from "react-spinners/HashLoader";
 interface wordbank {
   _id: string;
   book: object;
@@ -111,6 +112,7 @@ export default function GamePlay() {
   };
   const onSumbitHandler = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     const { id, total } = submitdata;
     if (id && total) {
       const sumbit = await GetRequestWithCre({
@@ -120,8 +122,10 @@ export default function GamePlay() {
       });
       if (sumbit.success) {
         changeFlashCard(sumbit.data.listflashcard);
+        setLoading(false);
       } else {
         Swal.fire(sumbit.msg, "", "error");
+        setLoading(false);
       }
     }
   };
@@ -351,9 +355,21 @@ export default function GamePlay() {
               Bao gồm các dạng câu hỏi như: Trắc nghiệm, điền từ, nhập từ{" "}
             </div>
             <div className=" py-6">
-              <button className=" bg-primary  text-white font-semibold px-16 py-3 text-xl rounded-xl">
-                Chơi ngay
-              </button>
+              {!isLoading ? (
+                <button className=" bg-primary  text-white font-semibold px-16 py-3 text-xl rounded-xl">
+                  Chơi ngay
+                </button>
+              ) : (
+                <button
+                  disabled
+                  className=" bg-primary  text-white font-semibold px-24 py-3 text-xl rounded-xl"
+                >
+                  <HashLoader
+                    color="white"
+                    size={24}
+                  ></HashLoader>
+                </button>
+              )}
             </div>
           </motion.div>
         </form>

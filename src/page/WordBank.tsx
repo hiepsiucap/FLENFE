@@ -7,6 +7,11 @@ import { formatDate } from "../utilz/Format";
 import { CreateBook } from "../component";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import Bin from "../assets/icon/bin";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
+import { DeleteRequestWithCre } from "../utilz/Request/DeteleRequest";
 import RotateLoader from "react-spinners/RotateLoader";
 interface wordbank {
   _id: string;
@@ -47,6 +52,22 @@ export default function WordBank() {
     GetRequest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const DeleteHandler = async (id: string) => {
+    if (id) {
+      const response = await DeleteRequestWithCre({
+        route: `api/bookstore/delete/${id}`,
+        accesstoken,
+        refreshtoken,
+      });
+      if (response.success) {
+        Swal.fire("Xoá thành công", "", "success");
+        navigate(0);
+      } else {
+        Swal.fire("Xoá thất bại", "", "error");
+      }
+    }
+  };
+  const navigate = useNavigate();
   console.log(data);
   return (
     <div className=" flex w-full">
@@ -84,16 +105,38 @@ export default function WordBank() {
                   to={`/wordbank/${book._id}`}
                   className=" shadow-md p-4  bg-white bg-opacity-100 rounded-lg border border-slate-200"
                 >
-                  <div className=" font-opensans flex space-x-4 items-center justify-start">
-                    <img
-                      src={book?.book?.ava}
-                      alt=""
-                      className=" w-20 h-20 rounded-full border "
-                    />
-                    <div className=" flex flex-col">
-                      <div className=" font-semibold">{book.book?.name}</div>
-                      <div>{book?.book?.numsofcard} từ vựng</div>
+                  <div className=" flex justify-between ">
+                    <div className=" font-opensans flex space-x-4 items-center justify-start">
+                      <img
+                        src={book?.book?.ava}
+                        alt=""
+                        className=" w-20 h-20 rounded-full border "
+                      />
+                      <div className=" flex flex-col">
+                        <div className=" font-semibold">{book.book?.name}</div>
+                        <div>{book?.book?.numsofcard} từ vựng</div>
+                      </div>
                     </div>
+                    <button
+                      onClick={async () => {
+                        Swal.fire({
+                          title: `Bạn có chắc xoá từ ${book.book.name}?`,
+                          text: "Từ vững sẽ bị xoá vĩnh viễn",
+                          icon: "warning",
+                          showCancelButton: true,
+                          confirmButtonColor: "#3085d6",
+                          cancelButtonColor: "#d33",
+                          cancelButtonText: "Không xoá nữa",
+                          confirmButtonText: "Xoá đi!",
+                        }).then(async (result) => {
+                          if (result.isConfirmed) {
+                            await DeleteHandler(book._id);
+                          }
+                        });
+                      }}
+                    >
+                      <Bin width={20}></Bin>
+                    </button>
                   </div>
                   <div className=" mx-auto text-center text-sm pt-6 ">
                     Ngày ôn tập gần nhất:{" "}
