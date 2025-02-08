@@ -118,7 +118,9 @@ export default function WordBank() {
                       </div>
                     </div>
                     <button
-                      onClick={async () => {
+                      onClick={async (event) => {
+                        event.stopPropagation(); // Ngăn chặn sự kiện click lan ra <Link>
+                        event.preventDefault();
                         Swal.fire({
                           title: `Bạn có chắc xoá từ ${book.book.name}?`,
                           text: "Từ vững sẽ bị xoá vĩnh viễn",
