@@ -107,7 +107,7 @@ export default function Meaning({
             className=" w-32 h-32 rounded-md"
             alt=""
           />
-          <p className=" font-semibold md:text-2xl ">{data.example}</p>
+          <p className=" font-semibold md:text-2xl ">{data.meaning}</p>
         </div>
       </div>
       <form onSubmit={onSubmitHandler}>
