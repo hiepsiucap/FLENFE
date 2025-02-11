@@ -48,8 +48,9 @@ export default function VietNam({
   const onSubmitHandler = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    if (inputanswer.toLowerCase() !== data.answer) {
+    if (inputanswer.toLowerCase() !== data.answer.toLowerCase()) {
       changeerror("error");
+      console.log(inputanswer, data.answer);
       playErrorSound();
       changetempscore((prev) => {
         return prev - 30;

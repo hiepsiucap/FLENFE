@@ -49,6 +49,8 @@ export default function Meaning({
     e.preventDefault();
     setLoading(true);
     if (inputanswer.toLowerCase() !== data.answer) {
+      console.log(inputanswer.toLowerCase(), data.answer);
+      console.log("Hello");
       changeerror("error");
       playErrorSound();
       changetempscore((prev) => {
