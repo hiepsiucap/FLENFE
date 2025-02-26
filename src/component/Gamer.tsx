@@ -261,6 +261,7 @@ export default function Gamer({
               total={round.length}
               currentvalue={currentvalue}
               onFinish={onFinish}
+              key={round[currentvalue]._id}
               changeCurrent={UpdateCurrent}
               UpdateScore={UpdateScore}
             ></Meaning>
@@ -268,6 +269,7 @@ export default function Gamer({
             <VietNam
               data={round[currentvalue]}
               total={round.length}
+              key={round[currentvalue]._id}
               currentvalue={currentvalue}
               onFinish={onFinish}
               changeCurrent={UpdateCurrent}

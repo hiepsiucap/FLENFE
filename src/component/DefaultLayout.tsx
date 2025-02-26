@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import Podium from "../assets/image/podium.png";
 import Logo from "../assets/icon/logo";
 import fire from "../assets/image/fire.png";
+import fireoff from "../assets/image/fireoff.png";
 import { useLocation } from "react-router-dom";
 import Console from "../assets/image/console.png";
 import { LevelDescription } from "../utilz/Constant";
@@ -13,13 +14,8 @@ import dangxuat from "../assets/image/dangxuat.png";
 import { useEffect, useState } from "react";
 import Hamburger from "./Hambuger";
 import ModalGetCurrentUser from "./CurrentUser";
-import cheems from "../assets/image/cheems.png";
-import {
-  buildStyles,
-  CircularProgressbarWithChildren,
-} from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-
+import ChooseTargetDay from "./ModalChooseTargetDay";
 import { GetRequestWithCre } from "../utilz/Request/getRequest";
 export default function DefaultLayout() {
   const {
@@ -86,38 +82,28 @@ export default function DefaultLayout() {
               {user.subscription?.title || "none"}
             </h5>
             <div className=" flex items-center space-x-2">
-              <img
-                src={fire}
-                className=" w-9 h-9"
-                alt=""
-              />
+              {user.streak > 0 ? (
+                <img
+                  src={fire}
+                  className=" w-9 h-9"
+                  alt=""
+                />
+              ) : (
+                <img
+                  src={fireoff}
+                  className=" w-9 h-9"
+                  alt=""
+                ></img>
+              )}
               <h5 className=" font-opensans text-xl font-semibold ">
                 {user.streak}
               </h5>
             </div>
-            <div className=" w-12 h-12">
-              <CircularProgressbarWithChildren
-                styles={buildStyles({
-                  pathColor: "#37AFE1",
-                  strokeLinecap: "butt",
-                })}
-                value={
-                  user.scoreADay < total
-                    ? 100
-                    : Number(total / user.scoreADay) * 100
-                }
-              >
-                <img
-                  style={{ width: 40, marginTop: -2 }}
-                  src={
-                    user.scoreADay > total
-                      ? "https://i.imgur.com/b9NyUGm.png"
-                      : cheems
-                  }
-                  alt="doge"
-                />
-              </CircularProgressbarWithChildren>
-            </div>
+            <ChooseTargetDay
+              total={total}
+              user={user}
+            ></ChooseTargetDay>
+
             <div className=" flex items-center space-x-2">
               <img
                 src={
@@ -170,6 +156,7 @@ export default function DefaultLayout() {
                     <h5 className=" font-opensans  ">{user.name}</h5>
                   </button>
                 </li>
+
                 {/* <li className=" flex space-x-2 justify-between font-medium">
                   <Hamburger></Hamburger>
                 </li> */}
@@ -202,6 +189,7 @@ export default function DefaultLayout() {
                   </div>
                 </div> */}
               </div>
+
               {/* <li className=" flex space-x-2   items-center text-md font-light">
               <Link
                 className={

@@ -50,9 +50,10 @@ export default function GamePlay() {
   const [isplay, changeIsPlay] = useState("");
   const { isLoading, setLoading } = useFetch();
   const [submitdata, changeSubmitData] = useState<SubmitData>({
-    total: 10,
+    total: 5,
     id: "",
   });
+  console.log(submitdata);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.code === "Space") {
@@ -139,6 +140,7 @@ export default function GamePlay() {
         refreshtoken,
         accesstoken,
       });
+      console.log(resultdata.data.returnbook);
       if (resultdata.success) {
         changeData(resultdata.data.returnbook);
         if (resultdata.data?.returnbook.length > 0)

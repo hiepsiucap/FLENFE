@@ -77,6 +77,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         } else {
           const data = await response.json();
           setUser(data.user);
+          localStorage.setItem("USER_DATA", JSON.stringify(data.user));
         }
       }
     };
