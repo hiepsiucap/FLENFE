@@ -24,6 +24,7 @@ export default function VietNam({
   total,
   currentvalue,
   onFinish,
+  ChangeText,
 }: {
   data: Round;
   changeCurrent: () => void;
@@ -39,6 +40,7 @@ export default function VietNam({
     _id: string;
     questionType: string;
   }) => void;
+  ChangeText: (text: string) => void;
 }) {
   const { isLoading, setLoading } = useFetch();
   const inputref = useRef<HTMLInputElement>(null);
@@ -64,7 +66,7 @@ export default function VietNam({
     } else {
       changeerror("success");
       playSuccessSound();
-
+      ChangeText(data._id);
       UpdateScore({
         score: tempscore > 0 ? tempscore : 0,
         _id: data._id,
@@ -84,7 +86,8 @@ export default function VietNam({
     }
   };
   const playSuccessSound = () => {
-    new Audio(successSound).play();
+    const audio = new Audio(successSound);
+    audio.play();
   };
   useEffect(() => {
     inputref.current?.focus();

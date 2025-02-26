@@ -24,6 +24,7 @@ export default function Meaning({
   total,
   currentvalue,
   onFinish,
+  ChangeText,
 }: {
   data: Round;
   changeCurrent: () => void;
@@ -39,6 +40,7 @@ export default function Meaning({
     _id: string;
     questionType: string;
   }) => void;
+  ChangeText: (text: string) => void;
 }) {
   const { isLoading, setLoading } = useFetch();
   const [inputanswer, changeinputanswer] = useState<string>("");
@@ -48,7 +50,7 @@ export default function Meaning({
   const onSubmitHandler = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    if (inputanswer.toLowerCase() !== data.answer) {
+    if (inputanswer.toLowerCase() !== data.answer.toLowerCase()) {
       console.log(inputanswer.toLowerCase(), data.answer);
       console.log("Hello");
       changeerror("error");
@@ -65,6 +67,7 @@ export default function Meaning({
     } else {
       changeerror("success");
       playSuccessSound();
+      ChangeText(data._id);
 
       UpdateScore({
         score: tempscore > 0 ? tempscore : 0,
@@ -86,7 +89,9 @@ export default function Meaning({
     }
   };
   const playSuccessSound = () => {
-    new Audio(successSound).play();
+    const audio = new Audio(successSound);
+
+    audio.play();
   };
 
   const playErrorSound = () => {

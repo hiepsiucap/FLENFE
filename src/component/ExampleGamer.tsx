@@ -30,7 +30,7 @@ interface Round {
 }
 function replaceWordWithBlank(sentence: string, targetWord: string) {
   const blank = "________";
-  const regex = new RegExp(`\\b${targetWord}\\b`, "gi");
+  const regex = new RegExp(`\\b${targetWord.toLowerCase()}\\b`, "gi");
   return sentence.replace(regex, blank);
 }
 function getRandomElements({
@@ -83,6 +83,7 @@ export default function ExampleGamer({
   round,
   currentvalue,
   onFinish,
+  ChangeText,
 }: {
   data: Round;
   changeCurrent: () => void;
@@ -99,6 +100,7 @@ export default function ExampleGamer({
     _id: string;
     questionType: string;
   }) => void;
+  ChangeText: (text: string) => void;
 }) {
   const { isLoading, setLoading } = useFetch();
   const [error, changeerror] = useState("none");
@@ -115,7 +117,7 @@ export default function ExampleGamer({
   );
   const onSubmitHandler = (inputanswer: string) => {
     setLoading(true);
-    if (inputanswer.toLowerCase() !== data.answer) {
+    if (inputanswer.toLowerCase() !== data.answer.toLowerCase()) {
       changeerror("error");
       playErrorSound();
       UpdateScore({
@@ -135,6 +137,7 @@ export default function ExampleGamer({
       }, 500);
     } else {
       changeerror("success");
+      ChangeText(data._id);
       playSuccessSound();
 
       UpdateScore({
@@ -155,7 +158,8 @@ export default function ExampleGamer({
     }
   };
   const playSuccessSound = () => {
-    new Audio(successSound).play();
+    const audio = new Audio(successSound);
+    audio.play();
   };
 
   const playErrorSound = () => {

@@ -1,6 +1,6 @@
 /** @format */
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import VietNam from "./VietNam";
 import Meaning from "./MeaningGame";
 import SoundGame from "./SoundGame";
@@ -33,6 +33,7 @@ interface round {
   score: number;
   questionType: string;
   image: string;
+  ChangeText: (text: string) => void;
 }
 function shuffleArray(array: round[]) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -49,6 +50,51 @@ export default function Gamer({
   session: string;
 }) {
   const { accesstoken, refreshtoken, user } = useStateUserContext();
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [readtext, changeReadtext] = useState<string>("  ");
+  const ChangeText = (text: string) => {
+    changeReadtext(text);
+  };
+  const fetchAudio = useCallback(
+    async (id: string) => {
+      try {
+        if (accesstoken && refreshtoken) {
+          const response = await fetch(
+            `${import.meta.env.VITE_API_URL_SERVER}/api/flashcard/read/${id}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${accesstoken}`,
+                "X-refresh-token": refreshtoken,
+              },
+              credentials: "include",
+            }
+          );
+          const blob = await response.blob();
+          console.log(blob);
+          if (blob) {
+            const url = URL.createObjectURL(blob);
+            setAudioUrl(url);
+            console.log(url);
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    [accesstoken, refreshtoken]
+  );
+  useEffect(() => {
+    if (readtext) fetchAudio(readtext);
+  }, [fetchAudio, readtext]);
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.load();
+      audioRef.current.play();
+    }
+  }, [audioUrl]);
+
   const [round, changeRound] = useState<round[]>(
     shuffleArray(
       flashCard.flatMap((card: FlashCardType): round[] => {
@@ -58,12 +104,13 @@ export default function Gamer({
               _id: card._id,
               book: card.book,
               questionType: "meaning",
-              answer: card.text.toLowerCase(),
+              answer: card.text,
               meaning: card.meaning,
               score: 0,
               phonetic: card.phonetic,
               example: card.example,
               image: card.image,
+              ChangeText: ChangeText,
             },
             {
               _id: card._id,
@@ -75,6 +122,7 @@ export default function Gamer({
               phonetic: card.phonetic,
               example: card.example,
               image: card.image,
+              ChangeText: ChangeText,
             },
             {
               _id: card._id,
@@ -86,6 +134,7 @@ export default function Gamer({
               phonetic: card.phonetic,
               example: card.example,
               image: card.image,
+              ChangeText: ChangeText,
             },
             {
               _id: card._id,
@@ -97,6 +146,7 @@ export default function Gamer({
               phonetic: card.phonetic,
               example: card.example,
               image: card.image,
+              ChangeText: ChangeText,
             },
           ];
         } else {
@@ -111,6 +161,7 @@ export default function Gamer({
               phonetic: card.phonetic,
               example: card.example,
               image: card.image,
+              ChangeText: ChangeText,
             },
             {
               _id: card._id,
@@ -122,6 +173,7 @@ export default function Gamer({
               phonetic: card.phonetic,
               example: card.example,
               image: card.image,
+              ChangeText: ChangeText,
             },
             {
               _id: card._id,
@@ -133,6 +185,7 @@ export default function Gamer({
               phonetic: card.phonetic,
               example: card.example,
               image: card.image,
+              ChangeText: ChangeText,
             },
           ];
         }
@@ -248,6 +301,18 @@ export default function Gamer({
       <div className="hidden md:block w-1/6 md:w-1/5 "></div>
       {!finish ? (
         <div className=" w-full md:w-4/5  font-opensans mt-6 flex flex-col justify-center items-center py-12   text-black">
+          {audioUrl && (
+            <audio
+              ref={audioRef}
+              className=" hidden"
+              controls
+            >
+              <source
+                src={audioUrl}
+                type="audio/mpeg"
+              />
+            </audio>
+          )}
           <div className=" w-full flex justify-center space-x-2">
             <Review
               max={round.length}
@@ -262,6 +327,7 @@ export default function Gamer({
               currentvalue={currentvalue}
               onFinish={onFinish}
               key={round[currentvalue]._id}
+              ChangeText={ChangeText}
               changeCurrent={UpdateCurrent}
               UpdateScore={UpdateScore}
             ></Meaning>
@@ -272,6 +338,7 @@ export default function Gamer({
               key={round[currentvalue]._id}
               currentvalue={currentvalue}
               onFinish={onFinish}
+              ChangeText={ChangeText}
               changeCurrent={UpdateCurrent}
               UpdateScore={UpdateScore}
             ></VietNam>
@@ -281,6 +348,7 @@ export default function Gamer({
               total={round.length}
               key={round[currentvalue]._id}
               currentvalue={currentvalue}
+              ChangeText={ChangeText}
               onFinish={onFinish}
               changeCurrent={UpdateCurrent}
               UpdateScore={UpdateScore}
@@ -291,6 +359,7 @@ export default function Gamer({
               total={round.length}
               key={round[currentvalue]._id}
               round={round}
+              ChangeText={ChangeText}
               currentvalue={currentvalue}
               onFinish={onFinish}
               changeCurrent={UpdateCurrent}

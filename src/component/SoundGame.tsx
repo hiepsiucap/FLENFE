@@ -28,6 +28,7 @@ export default function SoundGame({
   total,
   currentvalue,
   onFinish,
+  ChangeText,
 }: {
   data: Round;
   changeCurrent: () => void;
@@ -43,6 +44,7 @@ export default function SoundGame({
     _id: string;
     questionType: string;
   }) => void;
+  ChangeText: (text: string) => void;
 }) {
   const { isLoading, setLoading } = useFetch();
   const [inputanswer, changeinputanswer] = useState<string>("");
@@ -55,7 +57,7 @@ export default function SoundGame({
   const onSubmitHandler = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    if (inputanswer.toLowerCase() !== data.answer) {
+    if (inputanswer.toLowerCase() !== data.answer.toLowerCase()) {
       changeerror("error");
       playErrorSound();
       changetempscore((prev) => {
@@ -70,7 +72,7 @@ export default function SoundGame({
     } else {
       changeerror("success");
       playSuccessSound();
-
+      ChangeText(data._id);
       UpdateScore({
         score: tempscore > 0 ? tempscore : 0,
         _id: data._id,
@@ -90,9 +92,9 @@ export default function SoundGame({
     }
   };
   const playSuccessSound = () => {
-    new Audio(successSound).play();
+    const audio = new Audio(successSound);
+    audio.play();
   };
-
   const fetchAudio = useCallback(async (id: string) => {
     setLoading(true);
     try {
