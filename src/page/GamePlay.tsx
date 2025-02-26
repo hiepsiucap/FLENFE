@@ -50,7 +50,7 @@ export default function GamePlay() {
   const [isplay, changeIsPlay] = useState("");
   const { isLoading, setLoading } = useFetch();
   const [submitdata, changeSubmitData] = useState<SubmitData>({
-    total: 5,
+    total: 6,
     id: "",
   });
   console.log(submitdata);
@@ -147,10 +147,6 @@ export default function GamePlay() {
           changeSubmitData((prev) => {
             return {
               ...prev,
-              total:
-                resultdata.data?.returnbook.length < prev.total
-                  ? resultdata.data?.returnbook.length
-                  : prev.total,
               id: resultdata.data.returnbook[0]._id as string,
             };
           });
