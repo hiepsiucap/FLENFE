@@ -142,7 +142,7 @@ const CreateWord: React.FC = () => {
           title: "Success!",
           text: "Tạo mới thành công",
           icon: "success",
-          confirmButtonText: "Quay vế",
+          confirmButtonText: "Quay về",
         }).then(async (result) => {
           if (result.isConfirmed) {
             navigate(0);
