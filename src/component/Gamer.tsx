@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import FinishDay from "./ModalFinishDay";
 import finishsound from "../assets/audio/finish.mp3";
 import { useNavigate } from "react-router-dom";
+import { GetPostRequestWithCre } from "../utilz/Request/postRequest";
 interface FlashCardType {
   _id: string;
   book: string;
@@ -283,6 +284,12 @@ export default function Gamer({
     });
     if (response.success) {
       changefinish(true);
+      const response = await GetPostRequestWithCre({
+        route: "api/users/checkstreak",
+        body: {},
+        accesstoken,
+        refreshtoken,
+      });
       if (totalscore)
         if (
           user?.scoreADay &&
