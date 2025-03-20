@@ -35,6 +35,7 @@ interface result {
 export default function WordBank() {
   const { accesstoken, refreshtoken } = useStateUserContext();
   const [data, changeData] = useState<result[]>();
+  const [loading, changeLoading] = useState<boolean>(true);
   useEffect(() => {
     const GetRequest = async () => {
       const resultdata = await GetRequestWithCre({
@@ -44,8 +45,10 @@ export default function WordBank() {
       });
       if (resultdata.success) {
         changeData(resultdata.data.returnbook);
+        changeLoading(false);
       } else {
         console.log(resultdata.msg);
+        changeLoading(false);
       }
     };
 
@@ -72,7 +75,12 @@ export default function WordBank() {
   return (
     <div className=" flex w-full">
       <div className=" hidden md:block md:w-1/5 "></div>
-      {data && data?.length > 0 ? (
+      {loading ? (
+        <div className=" md:w-4/5 w-full  font-opensans mt-6 flex justify-center items-center h-32  text-black">
+          {" "}
+          <RotateLoader color="#14e1cf" />
+        </div>
+      ) : (
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -98,70 +106,74 @@ export default function WordBank() {
             </div>
             <CreateBook></CreateBook>
           </div>
-          <div className=" grid md:grid-cols-3 grid-cols-1  gap-6   h-64 ">
-            {data?.map((book) => {
-              return (
-                <Link
-                  to={`/wordbank/${book._id}`}
-                  className=" shadow-md p-4  bg-white bg-opacity-100 rounded-lg border border-slate-200"
-                >
-                  <div className=" flex justify-between ">
-                    <div className=" font-opensans flex space-x-4 items-center justify-start">
-                      <img
-                        src={book?.book?.ava}
-                        alt=""
-                        className=" w-20 h-20 rounded-full border "
-                      />
-                      <div className=" flex flex-col">
-                        <div className=" font-semibold">{book.book?.name}</div>
-                        <div>{book?.book?.numsofcard} từ vựng</div>
+          {data && data?.length > 0 ? (
+            <div className=" grid md:grid-cols-3 grid-cols-1  gap-6   h-64 ">
+              {data?.map((book) => {
+                return (
+                  <Link
+                    to={`/wordbank/${book._id}`}
+                    className=" shadow-md p-4  bg-white bg-opacity-100 rounded-lg border border-slate-200"
+                  >
+                    <div className=" flex justify-between ">
+                      <div className=" font-opensans flex space-x-4 items-center justify-start">
+                        <img
+                          src={book?.book?.ava}
+                          alt=""
+                          className=" w-20 h-20 rounded-full border "
+                        />
+                        <div className=" flex flex-col">
+                          <div className=" font-semibold">
+                            {book.book?.name}
+                          </div>
+                          <div>{book?.book?.numsofcard} từ vựng</div>
+                        </div>
                       </div>
+                      <button
+                        onClick={async (event) => {
+                          event.stopPropagation(); // Ngăn chặn sự kiện click lan ra <Link>
+                          event.preventDefault();
+                          Swal.fire({
+                            title: `Bạn có chắc xoá từ ${book.book.name}?`,
+                            text: "Từ vững sẽ bị xoá vĩnh viễn",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            cancelButtonText: "Không xoá nữa",
+                            confirmButtonText: "Xoá đi!",
+                          }).then(async (result) => {
+                            if (result.isConfirmed) {
+                              await DeleteHandler(book._id);
+                            }
+                          });
+                        }}
+                      >
+                        <Bin width={20}></Bin>
+                      </button>
                     </div>
-                    <button
-                      onClick={async (event) => {
-                        event.stopPropagation(); // Ngăn chặn sự kiện click lan ra <Link>
-                        event.preventDefault();
-                        Swal.fire({
-                          title: `Bạn có chắc xoá từ ${book.book.name}?`,
-                          text: "Từ vững sẽ bị xoá vĩnh viễn",
-                          icon: "warning",
-                          showCancelButton: true,
-                          confirmButtonColor: "#3085d6",
-                          cancelButtonColor: "#d33",
-                          cancelButtonText: "Không xoá nữa",
-                          confirmButtonText: "Xoá đi!",
-                        }).then(async (result) => {
-                          if (result.isConfirmed) {
-                            await DeleteHandler(book._id);
-                          }
-                        });
-                      }}
-                    >
-                      <Bin width={20}></Bin>
-                    </button>
-                  </div>
-                  <div className=" mx-auto text-center text-sm pt-6 ">
-                    Ngày ôn tập gần nhất:{" "}
-                    <span className=" text-primary font-bold">
-                      {formatDate(book?.lastSession?.date)}
-                    </span>
-                  </div>
-                  <div className=" mx-auto text-center text-sm pt-2 ">
-                    Số từ ôn tập hôm nay:{" "}
-                    <span className=" text-primary font-bold">
-                      {book.dueCardsCount} từ
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+                    <div className=" mx-auto text-center text-sm pt-6 ">
+                      Ngày ôn tập gần nhất:{" "}
+                      <span className=" text-primary font-bold">
+                        {formatDate(book?.lastSession?.date)}
+                      </span>
+                    </div>
+                    <div className=" mx-auto text-center text-sm pt-2 ">
+                      Số từ ôn tập hôm nay:{" "}
+                      <span className=" text-primary font-bold">
+                        {book.dueCardsCount} từ
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          ) : (
+            <div className=" md:w-4/5 w-full italic  font-opensans mt-6 flex justify-center  pl-12 h-32  text-black">
+              {" "}
+              <h2>Không có sổ từ</h2>
+            </div>
+          )}
         </motion.div>
-      ) : (
-        <div className=" md:w-4/5 w-full  font-opensans mt-6 flex justify-center items-center h-32  text-black">
-          {" "}
-          <RotateLoader color="#14e1cf" />
-        </div>
       )}
     </div>
   );
