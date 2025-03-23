@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import plus from "../assets/image/icons8-plus-30.png";
 import { useParams } from "react-router-dom";
 import RotateLoader from "react-spinners/RotateLoader";
+import { GetRequestWithCre } from "../utilz/Request/getRequest";
 const customStyles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -44,6 +45,11 @@ const CreateWord: React.FC = () => {
   const navigate = useNavigate();
   const { accesstoken, refreshtoken } = useStateUserContext();
   const [loading, changeloading] = useState(false);
+  const [aiMeaning, changeAiMeaning] = useState<
+    { meaning: string; type: string; definition: string }[]
+  >([]);
+
+  console.log(aiMeaning);
   const { isLoading, setLoading, error, setError } = useFetch();
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const subtitle = useRef<HTMLHeadingElement | null>(null);
@@ -57,11 +63,34 @@ const CreateWord: React.FC = () => {
     phonetic: "",
     example: "",
   });
-  const onChangeData = (e: React.ChangeEvent<HTMLInputElement>) => {
+  console.log(data);
+  const onChangeData = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    if (e.target.name === "meaning" && e.target.value === "custommeaning123") {
+      changeAiMeaning([]);
+      changedata((prev) => {
+        return { ...prev, meaning: "" };
+      });
+      return;
+    }
+    if (e.target.name === "meaning") {
+      changedata((prev) => {
+        return {
+          ...prev,
+          example:
+            aiMeaning.find((mn) => mn.meaning === e.target.value)?.definition ||
+            "",
+        };
+      });
+    }
     changedata((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
+
   const changeData = ({ name, data }: { name: string; data: string }) => {
     changedata((prev) => {
       return { ...prev, [name]: data };
@@ -211,14 +240,64 @@ const CreateWord: React.FC = () => {
             </div>
             <div className=" flex w-full flex-col space-x-1">
               <p className=" text-sm">Dịch nghĩa:</p>
-              <input
-                className="border border-gray-400 rounded-md py-2 px-4"
-                type="text"
-                name="meaning"
-                onChange={onChangeData}
-                value={data.meaning}
-              />
+              {aiMeaning.length === 0 ? (
+                <input
+                  className="border border-gray-400 rounded-md py-2 px-4"
+                  type="text"
+                  name="meaning"
+                  onChange={onChangeData}
+                  value={data.meaning}
+                />
+              ) : (
+                <select
+                  className="border border-gray-400 rounded-md py-2 px-4"
+                  name="meaning"
+                  onChange={onChangeData}
+                  value={data.meaning}
+                >
+                  {aiMeaning.map((mn) => {
+                    return <option value={mn.meaning}>{mn.meaning}</option>;
+                  })}
+                  <option value="custommeaning123">
+                    tự nhập nghĩa của bạn ......
+                  </option>
+                </select>
+              )}
             </div>
+            {aiMeaning.length === 0 && !loading && (
+              <button
+                type="button"
+                onClick={async () => {
+                  changeloading(true);
+                  const response = await GetRequestWithCre({
+                    route: `api/translate/getgpt?text=${data.text}`,
+                    accesstoken,
+                    refreshtoken,
+                  });
+                  if (response.success)
+                    changeAiMeaning(response.data?.meaningsArray);
+                  changeloading(false);
+                }}
+                className="flex items-center space-x-0.5"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="#37AFE1"
+                  className="size-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
+                  />
+                </svg>
+
+                <p className=" text-sm  text-primary">Tìm thêm nghĩa bằng AI</p>
+              </button>
+            )}
             <div className=" flex w-full flex-col space-x-1">
               <p className=" text-sm">Phiên âm:</p>
               <input
