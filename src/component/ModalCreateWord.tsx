@@ -72,7 +72,7 @@ const CreateWord: React.FC = () => {
     if (e.target.name === "meaning" && e.target.value === "custommeaning123") {
       changeAiMeaning([]);
       changedata((prev) => {
-        return { ...prev, meaning: "" };
+        return { ...prev, meaning: "", example: "" };
       });
       return;
     }
@@ -264,7 +264,7 @@ const CreateWord: React.FC = () => {
                 </select>
               )}
             </div>
-            {aiMeaning.length === 0 && !loading && (
+            {aiMeaning.length === 0 && data.text && !loading && (
               <button
                 type="button"
                 onClick={async () => {
