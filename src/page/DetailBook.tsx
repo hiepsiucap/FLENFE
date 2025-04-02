@@ -5,7 +5,8 @@ import { useStateUserContext } from "../contexts/UserContextProvider";
 import { GetRequestWithCre } from "../utilz/Request/getRequest";
 import { CreateWord } from "../component";
 import Sound from "../assets/icon/sound";
-import Box from "../assets/icon/box";
+
+import UpdateWord from "../component/ModelUpdateWord";
 import { useNavigate } from "react-router-dom";
 import Bin from "../assets/icon/bin";
 import RotateLoader from "react-spinners/RotateLoader";
@@ -194,7 +195,7 @@ export default function DetailBook() {
                           </button>
                         )}
                         <div className=" flex items-center space-x-2 ">
-                          <Box width={20}></Box>
+                          <UpdateWord Word={word}></UpdateWord>
                           <button
                             onClick={async () => {
                               Swal.fire({

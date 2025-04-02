@@ -37,12 +37,16 @@ interface round {
   ChangeText: (text: string) => void;
 }
 function shuffleArray(array: round[]) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const randomArray = new Uint32Array(1);
+    crypto.getRandomValues(randomArray);
+    const j = randomArray[0] % (i + 1);
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  return array;
+  return shuffled;
 }
+
 export default function Gamer({
   flashCard,
   session,
