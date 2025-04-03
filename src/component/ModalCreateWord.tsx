@@ -38,6 +38,7 @@ interface FlashCardInterface {
   meaning: string;
   phonetic: string;
   example: string;
+  type: string;
 }
 Modal.setAppElement("#root");
 
@@ -63,6 +64,7 @@ const CreateWord: React.FC = () => {
     meaning: "",
     phonetic: "",
     example: "",
+    type: "",
   });
   console.log(data);
   const onChangeData = (
@@ -158,14 +160,14 @@ const CreateWord: React.FC = () => {
   const onSubmitHandler = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    const { text, example, phonetic, meaning } = data;
+    const { text, example, phonetic, meaning, type } = data;
     if (text && meaning && bookId) {
       console.log("Book Id" + bookId);
       const response = await GetPostRequestWithCre({
         route: "api/flashcard/create",
         accesstoken,
         refreshtoken,
-        body: { text, example, phonetic, meaning, bookId },
+        body: { text, example, phonetic, meaning, bookId, type },
       });
       if (response.success) {
         Swal.fire({
@@ -308,6 +310,21 @@ const CreateWord: React.FC = () => {
                 onChange={onChangeData}
                 value={data.phonetic}
               />
+            </div>
+            <div className=" flex w-full flex-col space-x-1">
+              <p className=" text-sm">Từ loại:</p>
+              <select
+                className="border border-gray-400 rounded-md py-2 px-4"
+                name="type"
+                onChange={onChangeData}
+                value={data.type}
+              >
+                <option value=""> Chọn từ loại</option>
+                <option value="n">Danh từ</option>
+                <option value="adj">Tính từ</option>
+                <option value="v">Động từ</option>
+                <option value="adv">Trạng từ</option>
+              </select>
             </div>
             <div className=" flex w-full flex-col space-x-1">
               <p className=" text-sm">Định nghĩa:</p>

@@ -22,6 +22,7 @@ interface Word {
   meaning: string;
   example: string;
   image: string;
+  type: string;
 }
 export default function DetailBook() {
   const { bookId } = useParams();
@@ -222,8 +223,9 @@ export default function DetailBook() {
                         {word.text}
                       </div>
                       <div className=" font-light text-gray-600 ">
-                        {"[" + word.phonetic + "]"}
+                        {"[" + word.phonetic + "] "}- {word.type}
                       </div>
+
                       <div className=" font-  text-gray-600 py-2 ">
                         {word.meaning}
                       </div>

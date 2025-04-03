@@ -37,6 +37,7 @@ interface Word {
   meaning: string;
   example: string;
   image: string;
+  type: string;
 }
 interface FlashCardInterface {
   bookId: string;
@@ -45,6 +46,7 @@ interface FlashCardInterface {
   phonetic: string;
   example: string;
   image: string;
+  type: string;
 }
 Modal.setAppElement("#root");
 
@@ -71,6 +73,7 @@ const UpdateWord = ({ Word }: { Word: Word }) => {
     phonetic: Word?.phonetic,
     example: Word?.example,
     image: Word?.image,
+    type: Word?.type,
   });
   const AddImage = async () => {
     changeldimg(true);
@@ -263,6 +266,22 @@ const UpdateWord = ({ Word }: { Word: Word }) => {
                 </div>
               )}
             </div>
+            <div className=" flex w-full flex-col space-x-1">
+              <p className=" text-sm">Từ vựng:</p>
+              <input
+                className="border border-gray-400 rounded-md py-2 px-4"
+                type="text"
+                name="text"
+                onBlur={handleBlur}
+                onChange={onChangeData}
+                value={data.text}
+              />
+              {loading && (
+                <div className=" absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  <RotateLoader color="#14e1cf"></RotateLoader>
+                </div>
+              )}
+            </div>
             <div>
               <div className=" flex w-full flex-col space-x-1">
                 <p className=" text-sm">Dịch nghĩa:</p>
@@ -338,88 +357,93 @@ const UpdateWord = ({ Word }: { Word: Word }) => {
               />
             </div>
             <div className=" flex w-full flex-col space-x-1">
-              <p className=" text-sm">Định nghĩa:</p>
-              <input
+              <p className=" text-sm">Từ loại:</p>
+              <select
                 className="border border-gray-400 rounded-md py-2 px-4"
-                type="text"
-                name="example"
+                name="type"
                 onChange={onChangeData}
-                value={data.example}
-              />
+                value={data.type}
+              >
+                <option value=""> Chọn từ loại</option>
+                <option value="n">Danh từ</option>
+                <option value="adj">Tính từ</option>
+                <option value="v">Động từ</option>
+                <option value="adv">Trạng từ</option>
+              </select>
             </div>
-            <div className=" flex items-center justify-start">
-              <div className=" flex  flex-col space-x-1">
-                <p className=" text-sm pb-2">Ảnh minh hoạ:</p>
-                <div className=" flex items-center space-x-2">
-                  <div
-                    key={data.image}
-                    className={`border  cursor-pointer transition-all overflow-hidden w-32 h-32 rounded-md ${
-                      selectedImageUrl === data.image + " "
-                        ? "border-blue-500 border-4 bg-blue-50"
-                        : "border-gray-200 hover:border-blue-300 hover:border-3"
-                    }`}
-                    onClick={() => handleImageSelect(data.image + " ")}
-                  >
-                    <img
-                      src={data.image}
-                      alt={data.image}
-                      className="w-full h-full "
-                    />
-                  </div>
-                  {ldimg ? (
-                    <div className=" py-12 pl-24">
-                      <RotateLoader color="#14e1cf" />
-                    </div>
-                  ) : (
-                    listImage?.map((image) => {
-                      return (
-                        <div
-                          key={image}
-                          className={`border  cursor-pointer transition-all overflow-hidden w-32 h-32 rounded-md ${
-                            selectedImageUrl === image
-                              ? "border-blue-500 border-4 bg-blue-50"
-                              : "border-gray-200 hover:border-blue-300 hover:border-3"
-                          }`}
-                          onClick={() => handleImageSelect(image)}
-                        >
-                          <img
-                            src={image}
-                            alt={image}
-                            className="w-full h-full "
-                          />
-                        </div>
-                      );
-                    })
-                  )}
-                </div>
-              </div>
-              {listImage.length === 0 && !ldimg && (
-                <button
-                  type="button"
-                  onClick={AddImage}
-                  className=" pl-4 flex  items-center justify-center space-x-2"
+          </div>
+          <div className=" flex py-4 items-center justify-start">
+            <div className=" flex  flex-col space-x-1">
+              <p className=" text-sm pb-2">Ảnh minh hoạ:</p>
+              <div className=" flex items-center space-x-2">
+                <div
+                  key={data.image}
+                  className={`border  cursor-pointer transition-all overflow-hidden w-32 h-32 rounded-md ${
+                    selectedImageUrl === data.image + " "
+                      ? "border-blue-500 border-4 bg-blue-50"
+                      : "border-gray-200 hover:border-blue-300 hover:border-3"
+                  }`}
+                  onClick={() => handleImageSelect(data.image + " ")}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="#37AFE1"
-                    className=" size-7"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M7.5 3.75H6A2.25 2.25 0 0 0 3.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0 1 20.25 6v1.5m0 9V18A2.25 2.25 0 0 1 18 20.25h-1.5m-9 0H6A2.25 2.25 0 0 1 3.75 18v-1.5M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                    />
-                  </svg>
-
-                  <div className="  text-primary  font-semibold">
-                    Tìm kiếm thêm ảnh
+                  <img
+                    src={data.image}
+                    alt={data.image}
+                    className="w-full h-full "
+                  />
+                </div>
+                {ldimg ? (
+                  <div className=" py-12 pl-24">
+                    <RotateLoader color="#14e1cf" />
                   </div>
-                </button>
-              )}
+                ) : (
+                  listImage?.map((image) => {
+                    return (
+                      <div
+                        key={image}
+                        className={`border  cursor-pointer transition-all overflow-hidden w-32 h-32 rounded-md ${
+                          selectedImageUrl === image
+                            ? "border-blue-500 border-4 bg-blue-50"
+                            : "border-gray-200 hover:border-blue-300 hover:border-3"
+                        }`}
+                        onClick={() => handleImageSelect(image)}
+                      >
+                        <img
+                          src={image}
+                          alt={image}
+                          className="w-full h-full "
+                        />
+                      </div>
+                    );
+                  })
+                )}
+              </div>
             </div>
+            {listImage.length === 0 && !ldimg && (
+              <button
+                type="button"
+                onClick={AddImage}
+                className=" pl-4 flex  items-center justify-center space-x-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="#37AFE1"
+                  className=" size-7"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M7.5 3.75H6A2.25 2.25 0 0 0 3.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0 1 20.25 6v1.5m0 9V18A2.25 2.25 0 0 1 18 20.25h-1.5m-9 0H6A2.25 2.25 0 0 1 3.75 18v-1.5M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                  />
+                </svg>
+
+                <div className="  text-primary  font-semibold">
+                  Tìm kiếm thêm ảnh
+                </div>
+              </button>
+            )}
           </div>
           <div className=" w-full py-2 flex justify-center">
             {isLoading ? (
