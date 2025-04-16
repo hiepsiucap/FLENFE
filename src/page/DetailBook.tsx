@@ -5,7 +5,7 @@ import { useStateUserContext } from "../contexts/UserContextProvider";
 import { GetRequestWithCre } from "../utilz/Request/getRequest";
 import { CreateWord } from "../component";
 import Sound from "../assets/icon/sound";
-
+import SearchInput from "../component/SearchInput";
 import UpdateWord from "../component/ModelUpdateWord";
 import { useNavigate } from "react-router-dom";
 import Bin from "../assets/icon/bin";
@@ -13,7 +13,7 @@ import RotateLoader from "react-spinners/RotateLoader";
 import { useFetch } from "../customhook";
 import SoundSuccess from "../assets/icon/soundSuccess";
 import { DeleteRequestWithCre } from "../utilz/Request/DeteleRequest";
-
+import Pagination from "../component/Pagination";
 import Swal from "sweetalert2";
 interface Word {
   _id: string;
@@ -21,6 +21,7 @@ interface Word {
   text: string;
   meaning: string;
   example: string;
+  explain: string;
   image: string;
   type: string;
 }
@@ -29,27 +30,38 @@ export default function DetailBook() {
   const { accesstoken, refreshtoken } = useStateUserContext();
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const { isLoading, setLoading } = useFetch();
+  const [loadLoading, setloadLoading] = useState<boolean>(false);
+  const [page, setActivePage] = useState<number>(1);
   const [idaudio, setidaudio] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const navigate = useNavigate();
+  const [totalPage, changeTotalPage] = useState(0);
   const [listword, changelistword] = useState<Word[] | null>(null);
+  console.log(listword);
   useEffect(() => {
     const fetchListWord = async () => {
       if (bookId) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
         const response = await GetRequestWithCre({
-          route: `api/flashcard/bookcard/${bookId}`,
+          route: `api/flashcard/bookcard/${bookId}?page=${page}`,
           accesstoken,
           refreshtoken,
         });
         if (response.success) {
           if (response.data.listcard == 0) changelistword([]);
           changelistword(response.data.listcard);
+
+          changeTotalPage(response.data.total);
         }
       }
     };
     fetchListWord();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookId]);
+  }, [bookId, page]);
+
+  const onPageChange = (page: number) => {
+    setActivePage(page);
+  };
   const fetchAudio = async (id: string) => {
     setLoading(true);
     try {
@@ -103,16 +115,16 @@ export default function DetailBook() {
   return (
     <div className=" flex w-full">
       <div className=" hidden md:block w-1/6 md:w-1/5"></div>
-      {listword && listword?.length === 0 ? (
+      {listword && totalPage === 0 ? (
         <div className=" mx-auto px-4 md:px-0 md:m-0  md:w-4/5  font-opensans mt-6 md:mt-8  text-black md:pr-4">
           <div className=" flex justify-between items-center">
             <div>
               <h3 className=" font-opensans  text-3xl">Sổ từ của tôi</h3>
               <div className=" md:block hidden text-gray-700 py-2">
-                {listword?.length} sổ từ | từ vựng đã lưu | 0 từ vựng thành thạo
+                {totalPage} sổ từ | từ vựng đã lưu | 0 từ vựng thành thạoo
               </div>
               <div className=" md:hidden text-gray-700 py-2">
-                {listword?.length} từ | 0 từ vựng thành thạo
+                {totalPage} từ | 0 từ vựng thành thạo
               </div>
             </div>
             {audioUrl && (
@@ -127,13 +139,24 @@ export default function DetailBook() {
                 />
               </audio>
             )}
-            <CreateWord></CreateWord>
+            <div className=" flex justify-center items-center space-x-2 space-y-2">
+              <div className="pt-3">
+                <SearchInput
+                  placeholder="Tìm kiếm"
+                  changeTotalPage={changeTotalPage}
+                  changelistword={changelistword}
+                  setloadLoading={setloadLoading}
+                ></SearchInput>
+              </div>
+
+              <CreateWord></CreateWord>
+            </div>
           </div>
           <p className=" flex items-center justify-center py-12 text-lg">
             Chưa có từ nào được lưu
           </p>
         </div>
-      ) : listword && listword?.length > 0 ? (
+      ) : listword && listword?.length > 0 && loadLoading === false ? (
         <div className=" mx-auto px-4 md:px-0 md:m-0  md:w-4/5  font-opensans mt-6 md:mt-8  text-black md:pr-4">
           <div className=" flex justify-between items-center">
             <div>
@@ -157,15 +180,26 @@ export default function DetailBook() {
                 />
               </audio>
             )}
-            <CreateWord></CreateWord>
+            <div className=" flex justify-center items-center space-x-2 space-y-2">
+              <div className="pt-3">
+                <SearchInput
+                  placeholder="hi"
+                  changeTotalPage={changeTotalPage}
+                  changelistword={changelistword}
+                ></SearchInput>
+              </div>
+
+              <CreateWord></CreateWord>
+            </div>
           </div>
+
           <div className=" grid md:grid-cols-2 grid-cols-1 gap-10 pb-10 pr-3 md:pr-0">
             {listword ? (
               listword.map((word) => {
                 return (
                   <div
                     key={word._id}
-                    className=" shadow-lg bg-white  py-10 rounded-lg md:px-10 px-2 flex flex-col md:flex-row items-center md:justify-start space-x-5"
+                    className=" shadow-lg bg-white  py-6 rounded-lg md:px-10 px-2 flex flex-col md:flex-row items-center md:justify-start space-x-5"
                   >
                     <div className=" flex w-fit min-w-40 flex-col">
                       <img
@@ -220,17 +254,35 @@ export default function DetailBook() {
                         </div>
                       </div>
                       <div className=" font-semibold text-lg pt-2">
-                        {word.text}
+                        {word.text} {word.type ? "  [" + word.type + "]" : ""}
                       </div>
                       <div className=" font-light text-gray-600 ">
-                        {"[" + word.phonetic + "] "}- {word.type}
+                        {"[" + word.phonetic + "] "}
                       </div>
 
                       <div className=" font-  text-gray-600 py-2 ">
                         {word.meaning}
                       </div>
-                      <div className=" font-light text-gray-600 pr-2 md:pr-0 ">
-                        {word?.example && "Example: " + word?.example}
+                      <div className=" py-2">
+                        <div className="  font-semibold text-gray-900  pr-2 md:pr-0 ">
+                          {word?.explain && "Explain: "}
+                        </div>
+                        <div className="  font-light text-gray-600 pr-2 md:pr-0 ">
+                          {word?.explain &&
+                            (word.explain.length > 120
+                              ? word.explain.slice(0, 120) + "..."
+                              : word.explain)}
+                        </div>
+                      </div>
+                      <div>
+                        <div className=" font-semibold text-gray-900 pr-2 md:pr-0 ">
+                          {word?.example && "Example:"}
+                        </div>
+                        <div className=" font-light text-gray-600 pr-2 md:pr-0 ">
+                          {word?.example?.length > 120
+                            ? word.example.slice(0, 120) + "..."
+                            : word?.example}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -240,6 +292,12 @@ export default function DetailBook() {
               <p>Không có từ vựng nào được lưu</p>
             )}
           </div>
+          <Pagination
+            totalItems={totalPage}
+            itemsPerPage={10}
+            currentPage={1}
+            onPageChange={onPageChange}
+          ></Pagination>
         </div>
       ) : (
         <div className=" md:w-4/5 w-full  font-opensans mt-6 flex justify-center items-center h-32  text-black">
