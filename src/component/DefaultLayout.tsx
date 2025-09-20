@@ -45,7 +45,12 @@ export default function DefaultLayout() {
     GetTotal();
   }, [accesstoken, refreshtoken]);
   if (!user) {
-    return <Navigate to="/login"></Navigate>;
+    return (
+      <Navigate
+        to="/login"
+        replace
+      ></Navigate>
+    );
   }
   const onClickHandler = () => {
     setUserWithStorage(null);

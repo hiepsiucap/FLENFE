@@ -12,9 +12,20 @@ import {
   VerifyPage,
   Ranking,
 } from "./page";
+import { Navigate } from "react-router-dom";
+
 const router = createBrowserRouter([
   {
     path: "/",
+    element: (
+      <Navigate
+        to="/login"
+        replace
+      />
+    ),
+  },
+  {
+    path: "/app",
     element: (
       <>
         <DefaultLayout></DefaultLayout>
@@ -23,23 +34,23 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "/dashboard",
+        path: "/app/dashboard",
         element: <WordBank></WordBank>,
       },
       {
-        path: "/wordbank",
+        path: "/app/wordbank",
         element: <WordBank></WordBank>,
       },
       {
-        path: "/wordbank/:bookId",
+        path: "/app/wordbank/:bookId",
         element: <DetailBook></DetailBook>,
       },
       {
-        path: "/playgame",
+        path: "/app/playgame",
         element: <GamePlay></GamePlay>,
       },
       {
-        path: "/ranking",
+        path: "/app/ranking",
         element: <Ranking></Ranking>,
       },
     ],

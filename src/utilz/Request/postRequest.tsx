@@ -1,4 +1,5 @@
 /** @format */
+import { getApiUrl } from "../../config/env";
 
 export const GetPostRequest = async ({
   route,
@@ -8,16 +9,13 @@ export const GetPostRequest = async ({
   body: object;
 }) => {
   try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL_SERVER}/${route}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      }
-    );
+    const response = await fetch(`${getApiUrl()}/${route}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
     if (response.ok) {
       return { success: true, data: await response.json(), response };
     } else {
@@ -45,7 +43,7 @@ export const GetPostRequestWithCre = async ({
   try {
     if (accesstoken && refreshtoken) {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL_SERVER}/${route}`,
+        `${getApiUrl()}/${route}`,
 
         {
           method: "POST",
@@ -85,7 +83,7 @@ export const GetPostRequestFormDataWithCre = async ({
   try {
     if (accesstoken && refreshtoken) {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL_SERVER}/${route}`,
+        `${getApiUrl()}/${route}`,
 
         {
           method: "POST",
