@@ -48,6 +48,7 @@ export default function DetailBook() {
           refreshtoken,
         });
         if (response.success) {
+          console.log(response.data.listcard);
           if (response.data.listcard == 0) changelistword([]);
           changelistword(response.data.listcard);
 
@@ -115,7 +116,7 @@ export default function DetailBook() {
   return (
     <div className=" flex w-full">
       <div className=" hidden md:block w-1/6 md:w-1/5"></div>
-      {listword && totalPage === 0 ? (
+      {listword?.length === 0 && loadLoading === false ? (
         <div className=" mx-auto px-4 md:px-0 md:m-0  md:w-4/5  font-opensans mt-6 md:mt-8  text-black md:pr-4">
           <div className=" flex justify-between items-center">
             <div>

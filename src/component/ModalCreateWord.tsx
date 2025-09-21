@@ -12,7 +12,6 @@ import Swal from "sweetalert2";
 import plus from "../assets/image/icons8-plus-30.png";
 import { useParams } from "react-router-dom";
 import RotateLoader from "react-spinners/RotateLoader";
-import { GetRequestWithCre } from "../utilz/Request/getRequest";
 const customStyles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -128,6 +127,7 @@ const CreateWord: React.FC = () => {
       try {
         changeloading(true);
         const returndata = await fetchDictionaryData(searchTerm);
+        console.log(returndata);
         changeData({ name: "phonetic", data: returndata.phonetic });
         changeData({ name: "example", data: returndata.definition });
         const returndata2 = await fetchTranslation(searchTerm);
@@ -145,7 +145,7 @@ const CreateWord: React.FC = () => {
   };
   async function fetchTranslation(text: string): Promise<string> {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL_SERVER}/api/translate`,
+      `${import.meta.env.VITE_API_URL_SERVER}/api/translation/translate`,
       {
         method: "POST",
         body: JSON.stringify({
@@ -155,7 +155,7 @@ const CreateWord: React.FC = () => {
       }
     );
     const data = await response.json();
-    return data?.meaning;
+    return data?.data.translatedText;
   }
   const onSubmitHandler = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -272,13 +272,13 @@ const CreateWord: React.FC = () => {
                 type="button"
                 onClick={async () => {
                   changeloading(true);
-                  const response = await GetRequestWithCre({
-                    route: `api/translate/getgpt?text=${data.text}`,
+                  const response = await GetPostRequestWithCre({
+                    route: `api/translation/getgpt`,
+                    body: { text: data.text },
                     accesstoken,
                     refreshtoken,
                   });
-                  if (response.success)
-                    changeAiMeaning(response.data?.meaningsArray);
+                  if (response.success) changeAiMeaning(response.data?.data);
                   changeloading(false);
                 }}
                 className="flex items-center space-x-0.5"

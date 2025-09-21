@@ -140,14 +140,13 @@ export default function GamePlay() {
         refreshtoken,
         accesstoken,
       });
-      console.log(resultdata.data.returnbook);
       if (resultdata.success) {
-        changeData(resultdata.data.returnbook);
-        if (resultdata.data?.returnbook.length > 0)
+        changeData(resultdata.data.listbook);
+        if (resultdata.data?.listbook.length > 0)
           changeSubmitData((prev) => {
             return {
               ...prev,
-              id: resultdata.data.returnbook[0]._id as string,
+              id: resultdata.data.listbook[0]._id as string,
             };
           });
       } else {
