@@ -12,42 +12,9 @@ import {
   VerifyPage,
   Ranking,
 } from "./page";
-import { Navigate } from "react-router-dom";
-
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <VisitorLayout></VisitorLayout>,
-    children: [
-      {
-        index: true,
-        element: (
-          <Navigate
-            to="/login"
-            replace
-          />
-        ),
-      },
-      {
-        path: "login",
-        element: <Login></Login>,
-      },
-      {
-        path: "register",
-        element: <Register></Register>,
-      },
-      {
-        path: "verify",
-        element: <VerifyPage></VerifyPage>,
-      },
-      {
-        path: "forgotpassword",
-        element: <ForgotPassword></ForgotPassword>,
-      },
-    ],
-  },
-  {
-    path: "/app",
     element: (
       <>
         <DefaultLayout></DefaultLayout>
@@ -56,33 +23,47 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        index: true,
-        element: (
-          <Navigate
-            to="/app/dashboard"
-            replace
-          />
-        ),
-      },
-      {
-        path: "dashboard",
+        path: "/dashboard",
         element: <WordBank></WordBank>,
       },
       {
-        path: "wordbank",
+        path: "/wordbank",
         element: <WordBank></WordBank>,
       },
       {
-        path: "wordbank/:bookId",
+        path: "/wordbank/:bookId",
         element: <DetailBook></DetailBook>,
       },
       {
-        path: "playgame",
+        path: "/playgame",
         element: <GamePlay></GamePlay>,
       },
       {
-        path: "ranking",
+        path: "/ranking",
         element: <Ranking></Ranking>,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <VisitorLayout></VisitorLayout>,
+    children: [
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/register",
+        element: <Register></Register>,
+      },
+
+      {
+        path: "/verify",
+        element: <VerifyPage></VerifyPage>,
+      },
+      {
+        path: "/forgotpassword",
+        element: <ForgotPassword></ForgotPassword>,
       },
     ],
   },

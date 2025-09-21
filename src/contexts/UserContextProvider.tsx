@@ -2,7 +2,6 @@
 
 import { ReactNode, useEffect } from "react";
 import { createContext, useContext, useState } from "react";
-import { getApiUrl } from "../config/env";
 
 export interface StateContextType {
   user: User | null;
@@ -58,35 +57,27 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
 
   useEffect(() => {
     const validate = async () => {
-      // Skip validation if no API URL is configured
-      if (!import.meta.env.VITE_API_URL_SERVER) {
-        console.warn("API URL not configured, skipping token validation");
-        return;
-      }
-
       if (accesstoken && refreshtoken) {
-        try {
-          console.log(accesstoken, refreshtoken);
-          const response = await fetch(`${getApiUrl()}/api/auth/validate`, {
+        console.log(accesstoken, refreshtoken);
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL_SERVER}/api/auth/validate`,
+          {
             method: "POST",
             headers: {
               Authorization: `Bearer ${accesstoken}`, // Properly format Authorization header
               "X-refresh-token": refreshtoken,
             },
             credentials: "include",
-          });
-          if (!response.ok) {
-            setUser(null);
-            setAccessToken("");
-            setRefreshToken("");
-          } else {
-            const data = await response.json();
-            setUser(data.user);
-            localStorage.setItem("USER_DATA", JSON.stringify(data.user));
           }
-        } catch (error) {
-          console.error("Token validation failed:", error);
-          // Don't clear tokens on network error, just log it
+        );
+        if (!response.ok) {
+          setUser(null);
+          setAccessToken("");
+          setRefreshToken("");
+        } else {
+          const data = await response.json();
+          setUser(data.user);
+          localStorage.setItem("USER_DATA", JSON.stringify(data.user));
         }
       }
     };

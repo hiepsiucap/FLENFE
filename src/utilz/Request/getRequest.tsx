@@ -1,11 +1,12 @@
 /** @format */
-import { getApiUrl } from "../../config/env";
-
 export const GetRequest = async ({ route }: { route: string }) => {
   try {
-    const response = await fetch(`${getApiUrl()}/${route}`, {
-      method: "GET",
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL_SERVER}/${route}`,
+      {
+        method: "GET",
+      }
+    );
     if (response.ok) {
       return { success: true, data: await response.json() };
     } else {
@@ -29,14 +30,17 @@ export const GetRequestWithCre = async ({
 }) => {
   try {
     if (accesstoken && refreshtoken) {
-      const response = await fetch(`${getApiUrl()}/${route}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${accesstoken}`,
-          "X-refresh-token": refreshtoken,
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL_SERVER}/${route}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accesstoken}`,
+            "X-refresh-token": refreshtoken,
+          },
+          credentials: "include",
+        }
+      );
       if (response.ok) {
         return { success: true, data: await response.json(), response };
       } else {

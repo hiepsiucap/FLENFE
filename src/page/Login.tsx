@@ -48,7 +48,7 @@ export default function Login() {
         );
         console.log(response.data.user);
         setUserWithStorage(response.data.user);
-        navigate("/app");
+        navigate("/dashboard");
       } else {
         setError(response.msg || "Đã có lỗi");
       }
