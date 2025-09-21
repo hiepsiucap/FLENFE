@@ -6,6 +6,11 @@ import "./index.css";
 import router from "./route";
 import { UserContextProvider } from "./contexts";
 import { RouterProvider } from "react-router-dom";
+import { debugInfo } from "./utils/debug";
+
+// Debug info for troubleshooting
+debugInfo();
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <UserContextProvider>
